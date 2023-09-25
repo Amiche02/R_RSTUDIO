@@ -1,0 +1,1696 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={R Programming, Part 1},
+  pdfauthor={Feryal WINDAL},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{R Programming, Part 1}
+\author{Feryal WINDAL}
+\date{4/22/2021}
+
+\begin{document}
+\maketitle
+
+In this first part of the course, we will understand the R language.
+First, we will explore the types of data that we can meet such as real
+numbers, characters, booleans\ldots and understand the notion of
+variable. Secondly, we will work on data structures, arrays (vectors)
+and matrices with the corresponding instructions.
+
+\hypertarget{data-class-and-type}{%
+\section{Data class and type}\label{data-class-and-type}}
+
+To begin, we will talk about the numeric data class that represents
+numbers and digits in R. \#\# Numerics
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{class}\NormalTok{(}\FloatTok{6.5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "numeric"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{class}\NormalTok{(}\DecValTok{6}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "numeric"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{typeof}\NormalTok{(}\FloatTok{6.5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "double"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{as.integer}\NormalTok{(}\FloatTok{6.5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 6
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{typeof}\NormalTok{(}\FunctionTok{as.integer}\NormalTok{(}\DecValTok{4}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "integer"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#typeof(as.integer(6.5))}
+\end{Highlighting}
+\end{Shaded}
+
+typeof (6.5) informs us that they are doubles. If we want to transform
+this number into an int then we have to use as.integer (6.5) which
+returns us 6. working with integers or integrating does not take up much
+space in your machine's memory. However, in this course, we will use the
+doubles.
+
+\hypertarget{characters}{%
+\subsection{Characters}\label{characters}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{class}\NormalTok{(}\StringTok{"hello"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "character"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{typeof}\NormalTok{(}\StringTok{"hello"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "character"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{typeof}\NormalTok{(}\StringTok{"v"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "character"
+\end{verbatim}
+
+\hypertarget{booleans}{%
+\subsection{Booleans}\label{booleans}}
+
+Another class that we will discuss later is the Boolean class also
+called logical in R. This is true or false for example
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{44}\SpecialCharTok{\textgreater{}}\DecValTok{23}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{44}\SpecialCharTok{\textless{}}\DecValTok{23}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] FALSE
+\end{verbatim}
+
+\hypertarget{variables}{%
+\subsection{Variables}\label{variables}}
+
+A variable will allow us to store information. For example, when we need
+to get a file containing data, we will store it in a variable. So we can
+manipulate all of this data just by using a variable.
+
+A variable will take several types of data as we saw earlier.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_variable }\OtherTok{=} \DecValTok{4}
+\NormalTok{my\_variable}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{typeof}\NormalTok{(my\_variable)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "double"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{class}\NormalTok{(my\_variable)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "numeric"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_caractere }\OtherTok{=}\StringTok{"hello"}
+\NormalTok{my\_caractere}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "hello"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{typeof}\NormalTok{(my\_caractere)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "character"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{class}\NormalTok{(my\_caractere)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "character"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_booleen}\OtherTok{=} \ConstantTok{TRUE}
+
+\NormalTok{my\_booleen}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{typeof}\NormalTok{(my\_booleen)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "logical"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bool}\OtherTok{=} \DecValTok{4}\SpecialCharTok{\textless{}}\DecValTok{2}
+\NormalTok{bool}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] FALSE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Booleen }\OtherTok{=} \ConstantTok{TRUE}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{arithmetic-operations}{%
+\section{Arithmetic operations}\label{arithmetic-operations}}
+
+What you need to know is that R works like a calculator
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{4}\SpecialCharTok{+}\DecValTok{6}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{var1 }\OtherTok{=} \DecValTok{100} \DocumentationTok{\#\# new variable named var1 which takes the value 100}
+\NormalTok{var2 }\OtherTok{=} \DecValTok{4} \DocumentationTok{\#\# var2 takes the value 4}
+\NormalTok{var1 }\SpecialCharTok{+}\NormalTok{ var2 }\DocumentationTok{\#\# addition between variables}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 104
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{var3 }\OtherTok{=}\NormalTok{ var1 }\SpecialCharTok{+}\NormalTok{ var2 }\CommentTok{\# assign the result of the addition to a new variable var3}
+\NormalTok{var3 }\DocumentationTok{\#\# display of var3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 104
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{var1 }\SpecialCharTok{*}\NormalTok{ var2 }\DocumentationTok{\#\# multiplication}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 400
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{var1 }\SpecialCharTok{/}\NormalTok{ var2 }\DocumentationTok{\#\# division}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 25
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{var1 }\SpecialCharTok{\%\%}\NormalTok{ var2 }\DocumentationTok{\#\# modulo operation (remainder of the division between var1 and var2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0
+\end{verbatim}
+
+\hypertarget{simple-data-structure}{%
+\section{Simple data structure}\label{simple-data-structure}}
+
+\hypertarget{vectors}{%
+\subsection{Vectors}\label{vectors}}
+
+A vector in R has the same definition as in linear algebra. That is to
+say that it is a variable representing one or more variables. If you are
+familiar with other programming languages, it's like an array of values.
+The vector is represented by a variable where all the values are stored.
+Earlier, we declared a variable ``var1''. This also represents a vector
+in R.
+
+To create a vector we will use the function c for concatenation
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{vec1}\OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{)}
+\NormalTok{vec1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 2 3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{typeof}\NormalTok{(vec1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "double"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{class}\NormalTok{(vec1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "numeric"
+\end{verbatim}
+
+If we want a character type vector
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{c}\NormalTok{(}\StringTok{"a"}\NormalTok{,}\StringTok{"b"}\NormalTok{,}\StringTok{"c"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "a" "b" "c"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{car1}\OtherTok{=}\FunctionTok{c}\NormalTok{(}\StringTok{"a"}\NormalTok{,}\StringTok{"b"}\NormalTok{,}\StringTok{"c"}\NormalTok{)}
+\NormalTok{car1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "a" "b" "c"
+\end{verbatim}
+
+You cannot mix data types in a vector. The vector, like the variable,
+meets the typing criteria seen previously. If we want to mix different
+types, for example, well let's experiment:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{vec2}\OtherTok{=}\FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\StringTok{"a"}\NormalTok{,}\FloatTok{4.5}\NormalTok{)}
+\NormalTok{vec2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "3"   "a"   "4.5"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{typeof}\NormalTok{((vec2))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "character"
+\end{verbatim}
+
+We note that by default, it is the type ``character'' which takes
+defined.
+
+\hypertarget{operations-on-vectors}{%
+\subsection{Operations on vectors:}\label{operations-on-vectors}}
+
+In this part, we are interested in arithmetic and other operations on
+vectors. Other functions allow to generate vectors for example
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# with the seq function, two ways to write}
+\NormalTok{my\_vector1}\OtherTok{=} \FunctionTok{seq}\NormalTok{(}\AttributeTok{from=}\DecValTok{1}\NormalTok{, }\AttributeTok{to=}\DecValTok{10}\NormalTok{)}
+\NormalTok{my\_vector1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  1  2  3  4  5  6  7  8  9 10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_vector2}\OtherTok{=}\FunctionTok{seq}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{)}
+\NormalTok{my\_vector2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  1  2  3  4  5  6  7  8  9 10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# with the rep function, two ways to write}
+\NormalTok{my\_vector3}\OtherTok{=} \FunctionTok{rep}\NormalTok{(}\DecValTok{10}\NormalTok{, }\AttributeTok{times =} \DecValTok{10}\NormalTok{)}
+\NormalTok{my\_vector3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 10 10 10 10 10 10 10 10 10 10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_vector4 }\OtherTok{=} \FunctionTok{rep}\NormalTok{(}\DecValTok{10}\NormalTok{,}\DecValTok{10}\NormalTok{)}
+\NormalTok{my\_vector4}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 10 10 10 10 10 10 10 10 10 10
+\end{verbatim}
+
+To increase the values of the vector my\_vector1 by 1
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_vector1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  1  2  3  4  5  6  7  8  9 10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_vector1}\SpecialCharTok{+}\DecValTok{1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  2  3  4  5  6  7  8  9 10 11
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_vector1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  1  2  3  4  5  6  7  8  9 10
+\end{verbatim}
+
+To multiply the values of the vector my\_vector1 by 2
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_vector1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  1  2  3  4  5  6  7  8  9 10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_vector1}\SpecialCharTok{*}\DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  2  4  6  8 10 12 14 16 18 20
+\end{verbatim}
+
+to do multiplication operations between two vectors
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_vector1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  1  2  3  4  5  6  7  8  9 10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_vector2 }\OtherTok{=} \FunctionTok{seq}\NormalTok{(}\AttributeTok{from=}\DecValTok{6}\NormalTok{, }\AttributeTok{to=} \DecValTok{15}\NormalTok{)}
+\NormalTok{my\_vector2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  6  7  8  9 10 11 12 13 14 15
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_vector1}\SpecialCharTok{*}\NormalTok{my\_vector2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]   6  14  24  36  50  66  84 104 126 150
+\end{verbatim}
+
+Same for performing additions between vectors
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_vector1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  1  2  3  4  5  6  7  8  9 10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_vector2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  6  7  8  9 10 11 12 13 14 15
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_vector1}\SpecialCharTok{+}\NormalTok{my\_vector2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  7  9 11 13 15 17 19 21 23 25
+\end{verbatim}
+
+To perform a subtraction
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_vector1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  1  2  3  4  5  6  7  8  9 10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_vector2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  6  7  8  9 10 11 12 13 14 15
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_vector1 }\SpecialCharTok{{-}}\NormalTok{ my\_vector2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] -5 -5 -5 -5 -5 -5 -5 -5 -5 -5
+\end{verbatim}
+
+To divide between vectors
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_vector1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  1  2  3  4  5  6  7  8  9 10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_vector2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  6  7  8  9 10 11 12 13 14 15
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_vector1 }\SpecialCharTok{/}\NormalTok{ my\_vector2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 0.1666667 0.2857143 0.3750000 0.4444444 0.5000000 0.5454545 0.5833333
+##  [8] 0.6153846 0.6428571 0.6666667
+\end{verbatim}
+
+To concatenate two vectors, just do the following operation
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_vector1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  1  2  3  4  5  6  7  8  9 10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_vector3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 10 10 10 10 10 10 10 10 10 10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_vector5}\OtherTok{=}\FunctionTok{c}\NormalTok{(my\_vector1,my\_vector3)}
+\NormalTok{my\_vector5}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  1  2  3  4  5  6  7  8  9 10 10 10 10 10 10 10 10 10 10 10
+\end{verbatim}
+
+\hypertarget{the-different-functions-for-manipulating-vectors}{%
+\subsection{The different functions for manipulating
+vectors:}\label{the-different-functions-for-manipulating-vectors}}
+
+In this section we will focus on existing and very useful functions in R
+which will allow us to manipulate vectors:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{length}\NormalTok{(my\_vector1)  }\DocumentationTok{\#\# vector size}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10
+\end{verbatim}
+
+The length function takes a vector as argument.If we want for example to
+sort a vector from the smallest value to the largest value:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_vector6 }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{49}\NormalTok{, }\DecValTok{24}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{87}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{33}\NormalTok{, }\DecValTok{56}\NormalTok{, }\DecValTok{88}\NormalTok{, }\DecValTok{17}\NormalTok{) }\DocumentationTok{\#\# creation of a new vector}
+\FunctionTok{sort}\NormalTok{(my\_vector6) }\DocumentationTok{\#\# the sort function allows you to sort the values inside a vector.}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  2  6 10 17 24 33 49 56 87 88
+\end{verbatim}
+
+If we want to create a new vector with the sorted values of the
+my\_vector6 vector then
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mon\_vecteurTrieC }\OtherTok{=} \FunctionTok{sort}\NormalTok{(my\_vector6)}
+\NormalTok{mon\_vecteurTrieC}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  2  6 10 17 24 33 49 56 87 88
+\end{verbatim}
+
+Now if we want to sort descending, we just need to use the same output
+function with an option which is decreasing = TRUE:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sort}\NormalTok{(my\_vector6, }\AttributeTok{decreasing=} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 88 87 56 49 33 24 17 10  6  2
+\end{verbatim}
+
+If we can also create a new variable or object to which we can assign
+this vector sorted in descending order:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mon\_vecteurTrieD}\OtherTok{=}\FunctionTok{sort}\NormalTok{(my\_vector6, }\AttributeTok{decreasing =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{mon\_vecteurTrieD}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 88 87 56 49 33 24 17 10  6  2
+\end{verbatim}
+
+To see the ranks of each value in my array, we can use the rank
+function:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_vector6}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 49 24  2 87  6 10 33 56 88 17
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{rank}\NormalTok{(my\_vector6) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  7  5  1  9  2  3  6  8 10  4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{rank}\NormalTok{(mon\_vecteurTrieC)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  1  2  3  4  5  6  7  8  9 10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{rank}\NormalTok{(mon\_vecteurTrieD)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 10  9  8  7  6  5  4  3  2  1
+\end{verbatim}
+
+\hypertarget{browse-vectors}{%
+\subsection{Browse vectors}\label{browse-vectors}}
+
+If, for example, we want to know the value at position 2 of the vector
+my\_vector6
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_vector6}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 49 24  2 87  6 10 33 56 88 17
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_vector6[}\DecValTok{2}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 24
+\end{verbatim}
+
+If we now want to display the first 3 values of the vector:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_vector6 [}\DecValTok{1}\SpecialCharTok{:} \DecValTok{3}\NormalTok{] }\DocumentationTok{\#\# the 1: 3 sequence indicates that I want the values from position 1 to position 3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 49 24  2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_vector6 [}\DecValTok{3}\SpecialCharTok{:} \DecValTok{7}\NormalTok{] }\DocumentationTok{\#\# displays values from position 3 to position 7}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  2 87  6 10 33
+\end{verbatim}
+
+If we now wish to access positions 3, 5, 9 of the vector
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_vector6}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 49 24  2 87  6 10 33 56 88 17
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_vector6[}\DecValTok{3}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_vector6[}\FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{9}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  2  6 88
+\end{verbatim}
+
+If you want to retrieve all the values greater than 30
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_vector6}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 49 24  2 87  6 10 33 56 88 17
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{superior }\OtherTok{=}\NormalTok{ my\_vector6}\SpecialCharTok{\textgreater{}} \DecValTok{30} \DocumentationTok{\#\# creation of a new vector}
+\NormalTok{superior }\DocumentationTok{\#\# here we can see that when it is a value greater than 30, it displays TRUE and when it is a value less than 30, it displays FALSE}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  TRUE FALSE FALSE  TRUE FALSE FALSE  TRUE  TRUE  TRUE FALSE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_vector6[superior] }\DocumentationTok{\#\# now, showing all values greater than 30}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 49 87 33 56 88
+\end{verbatim}
+
+Ici, nous allons nous interesser à certaines fonctions qui permettent de
+faire certaines opérations sur les vecteurs:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_vector6}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 49 24  2 87  6 10 33 56 88 17
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sum}\NormalTok{ (my\_vector6) }\CommentTok{\# sum of all vector values}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 372
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mean}\NormalTok{ (my\_vector6) }\CommentTok{\# mean of vector}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 37.2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{min}\NormalTok{ (my\_vector6) }\CommentTok{\# know the smallest value of the vector}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{max}\NormalTok{ (my\_vector6) }\CommentTok{\# know the greatest value of the vector}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 88
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{median}\NormalTok{ (my\_vector6)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 28.5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{ (my\_vector6) }\CommentTok{\# informs us of vector distributions}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    2.00   11.75   28.50   37.20   54.25   88.00
+\end{verbatim}
+
+\hypertarget{simple-statistics-on-a-vector}{%
+\subsection{Simple statistics on a
+vector}\label{simple-statistics-on-a-vector}}
+
+In this part, we are going to review the set of functions that we have
+seen previously by illustrating this with a simple exercise that speaks
+to everyone, that is to say the notes in a class. Suppose we have math
+scores for a class of 25 students and we want to know the different
+statistics. In this case, it means knowing the average, the worst score,
+the highest score, those who are below the average, those who are above
+the average, etc.
+
+For this, we will use a runif function, which will generate values
+randomly between a min and a max. Then we want to round these values so
+that they are more integer type.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{grade\_math }\OtherTok{=} \FunctionTok{runif}\NormalTok{ (}\DecValTok{25}\NormalTok{, }\AttributeTok{min =} \DecValTok{1}\NormalTok{, }\AttributeTok{max =} \DecValTok{20}\NormalTok{) }\CommentTok{\# randomly generate 25 values between 1 and 20}
+\NormalTok{grade\_math }\CommentTok{\# in this vector we can see that these are random values with lots of decimal places.}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  3.300092  2.396880 18.746314 18.792320 18.992879 17.805648 18.345717
+##  [8] 16.217433 15.230759  8.221450 19.352025  8.229528  1.213513  8.115575
+## [15] 17.173778 16.873690  1.520676 19.914897 12.565446  1.631267 12.752673
+## [22]  7.953478  4.871654  7.045251 16.610009
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{grade\_math }\OtherTok{=} \FunctionTok{round}\NormalTok{(grade\_math, }\AttributeTok{digits =} \DecValTok{0}\NormalTok{) }\CommentTok{\# here we are going to round the numbers generated by runif to any number after the decimal point with the round function.}
+\NormalTok{grade\_math}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  3  2 19 19 19 18 18 16 15  8 19  8  1  8 17 17  2 20 13  2 13  8  5  7 17
+\end{verbatim}
+
+Now we are going to give names to the students
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{names}\NormalTok{(grade\_math) }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{"Elise"}\NormalTok{, }\StringTok{"Leon"}\NormalTok{,}\StringTok{"Sully"}\NormalTok{, }\StringTok{"Anouck"}\NormalTok{,}\StringTok{"Baptiste"}\NormalTok{, }\StringTok{"Thibault"}\NormalTok{, }\StringTok{"Paul"}\NormalTok{, }\StringTok{"Zoé"}\NormalTok{, }\StringTok{"Zély"}\NormalTok{, }\StringTok{"Amandine"}\NormalTok{, }\StringTok{"Antoine"}\NormalTok{, }\StringTok{"Charles"}\NormalTok{, }\StringTok{"Lilou"}\NormalTok{, }\StringTok{"Chloé"}\NormalTok{, }\StringTok{"Daphnée"}\NormalTok{, }\StringTok{"Nicolas"}\NormalTok{, }\StringTok{"Maxcence"}\NormalTok{, }\StringTok{"Auguste"}\NormalTok{, }\StringTok{"Mathurin"}\NormalTok{, }\StringTok{"Sarah"}\NormalTok{, }\StringTok{"Lili"}\NormalTok{, }\StringTok{"Marion"}\NormalTok{,}\StringTok{"Naomie"}\NormalTok{,}\StringTok{"Raphael"}\NormalTok{, }\StringTok{"Flora"}\NormalTok{)}
+\NormalTok{grade\_math}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Elise     Leon    Sully   Anouck Baptiste Thibault     Paul      Zoé 
+##        3        2       19       19       19       18       18       16 
+##     Zély Amandine  Antoine  Charles    Lilou    Chloé  Daphnée  Nicolas 
+##       15        8       19        8        1        8       17       17 
+## Maxcence  Auguste Mathurin    Sarah     Lili   Marion   Naomie  Raphael 
+##        2       20       13        2       13        8        5        7 
+##    Flora 
+##       17
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{typeof}\NormalTok{(grade\_math)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "double"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{class}\NormalTok{(grade\_math)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "numeric"
+\end{verbatim}
+
+\hypertarget{edit-vector-values}{%
+\subsection{Edit vector values}\label{edit-vector-values}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{grade\_math[}\DecValTok{3}\NormalTok{]}\OtherTok{=} \DecValTok{14}
+\NormalTok{grade\_math[}\StringTok{"Baptiste"}\NormalTok{]}\OtherTok{=} \DecValTok{13}
+\FunctionTok{names}\NormalTok{(grade\_math[}\DecValTok{2}\NormalTok{])}\OtherTok{=}\FunctionTok{c}\NormalTok{(}\StringTok{"Mikael"}\NormalTok{)}
+\NormalTok{grade\_math}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Elise     Leon    Sully   Anouck Baptiste Thibault     Paul      Zoé 
+##        3        2       14       19       13       18       18       16 
+##     Zély Amandine  Antoine  Charles    Lilou    Chloé  Daphnée  Nicolas 
+##       15        8       19        8        1        8       17       17 
+## Maxcence  Auguste Mathurin    Sarah     Lili   Marion   Naomie  Raphael 
+##        2       20       13        2       13        8        5        7 
+##    Flora 
+##       17
+\end{verbatim}
+
+\hypertarget{matrices}{%
+\section{Matrices}\label{matrices}}
+
+It is a table with two dimensions.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{vector1}\OtherTok{=} \FunctionTok{sample}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{20}\NormalTok{, }\DecValTok{12}\NormalTok{)}
+\NormalTok{vector1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  4 14  7 18 10  5 12  9  1 13 17  2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{matrix}\NormalTok{(vector1,}\AttributeTok{nrow=}\DecValTok{3}\NormalTok{, }\AttributeTok{ncol =} \DecValTok{4}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2] [,3] [,4]
+## [1,]    4   18   12   13
+## [2,]   14   10    9   17
+## [3,]    7    5    1    2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{grade\_class}\OtherTok{=}\FunctionTok{runif}\NormalTok{(}\DecValTok{15}\NormalTok{, }\AttributeTok{min=}\DecValTok{1}\NormalTok{, }\AttributeTok{max=}\DecValTok{20}\NormalTok{)}
+\NormalTok{grade\_class}\OtherTok{=}\FunctionTok{round}\NormalTok{(grade\_class, }\AttributeTok{digits =} \DecValTok{0}\NormalTok{)}
+\NormalTok{grade\_class}\OtherTok{=} \FunctionTok{matrix}\NormalTok{(grade\_class, }\AttributeTok{ncol =} \DecValTok{3}\NormalTok{, }\AttributeTok{nrow =} \DecValTok{5}\NormalTok{)}
+\NormalTok{grade\_class}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2] [,3]
+## [1,]    5   20    6
+## [2,]   20   10    6
+## [3,]   16    9   16
+## [4,]   16    9   18
+## [5,]   15   12    8
+\end{verbatim}
+
+We can also create character type matrices
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ma\_matrice2}\OtherTok{=}\FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"a"}\NormalTok{, }\StringTok{"b"}\NormalTok{, }\StringTok{"c"}\NormalTok{,}\StringTok{"d"}\NormalTok{,}\StringTok{"e"}\NormalTok{,}\StringTok{"f"}\NormalTok{,}\StringTok{"g"}\NormalTok{,}\StringTok{"h"}\NormalTok{,}\StringTok{"i"}\NormalTok{), }\AttributeTok{nrow =} \DecValTok{3}\NormalTok{, }\AttributeTok{ncol =} \DecValTok{3}\NormalTok{)}
+\NormalTok{ma\_matrice2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2] [,3]
+## [1,] "a"  "d"  "g" 
+## [2,] "b"  "e"  "h" 
+## [3,] "c"  "f"  "i"
+\end{verbatim}
+
+In order to name the rows and columns of the matrices
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{colnames}\NormalTok{(grade\_class)}\OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{"Biology"}\NormalTok{, }\StringTok{"Maths"}\NormalTok{, }\StringTok{"Physical"}\NormalTok{)}
+\FunctionTok{rownames}\NormalTok{(grade\_class)}\OtherTok{=}\FunctionTok{c}\NormalTok{(}\StringTok{"Elise"}\NormalTok{, }\StringTok{"Leon"}\NormalTok{,}\StringTok{"Sully"}\NormalTok{, }\StringTok{"Anouck"}\NormalTok{,}\StringTok{"Baptiste"}\NormalTok{)}
+\NormalTok{grade\_class}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          Biology Maths Physical
+## Elise          5    20        6
+## Leon          20    10        6
+## Sully         16     9       16
+## Anouck        16     9       18
+## Baptiste      15    12        8
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{grade\_class [, }\StringTok{"Biology"}\NormalTok{] }\DocumentationTok{\#\# displays the first column}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Elise     Leon    Sully   Anouck Baptiste 
+##        5       20       16       16       15
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{grade\_class [, }\DecValTok{1}\NormalTok{] }\DocumentationTok{\#\# this instruction is equivalent to the previous one}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Elise     Leon    Sully   Anouck Baptiste 
+##        5       20       16       16       15
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{grade\_class [}\StringTok{"Sully"}\NormalTok{,] }\DocumentationTok{\#\# displays the 3rd line}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  Biology    Maths Physical 
+##       16        9       16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{grade\_class [}\DecValTok{3}\NormalTok{,] }\DocumentationTok{\#\# instruction equivalent to the previous one}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  Biology    Maths Physical 
+##       16        9       16
+\end{verbatim}
+
+If we want to see Sully's note in Physical, we have two ways:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{grade\_class[}\StringTok{"Sully"}\NormalTok{, }\StringTok{"Physical"}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{grade\_class[}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{] }\DocumentationTok{\#\#instruction equivalent to the previous one}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{grade\_class[}\StringTok{"Elise"}\NormalTok{,}\StringTok{"Maths"}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 20
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{grade\_class[}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{] }\DocumentationTok{\#\# Elise\textquotesingle{}s grade in Maths}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 20
+\end{verbatim}
+
+To access Elise's Maths and Physical notes
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{grade\_class[}\StringTok{"Elise"}\NormalTok{, }\FunctionTok{c}\NormalTok{(}\StringTok{"Maths"}\NormalTok{, }\StringTok{"Physical"}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Maths Physical 
+##       20        6
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{grade\_class[}\DecValTok{1}\NormalTok{, }\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Maths Physical 
+##       20        6
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{grade\_class[}\StringTok{"Elise"}\NormalTok{, }\DecValTok{2}\SpecialCharTok{:}\DecValTok{3}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Maths Physical 
+##       20        6
+\end{verbatim}
+
+We can do the same actions at row level For example see the notes of
+Anouck and Baptiste in Biology
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{grade\_class[}\FunctionTok{c}\NormalTok{(}\StringTok{"Anouck"}\NormalTok{,}\StringTok{"Baptiste"}\NormalTok{), }\StringTok{"Biology"}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Anouck Baptiste 
+##       16       15
+\end{verbatim}
+
+\hypertarget{modify-the-elements-of-a-matrix}{%
+\subsection{Modify the elements of a
+matrix}\label{modify-the-elements-of-a-matrix}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{grade\_class[}\FunctionTok{c}\NormalTok{(}\StringTok{"Anouck"}\NormalTok{,}\StringTok{"Baptiste"}\NormalTok{), }\StringTok{"Biology"}\NormalTok{]}\OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{15}\NormalTok{, }\DecValTok{17}\NormalTok{)}
+\NormalTok{grade\_class[}\FunctionTok{c}\NormalTok{(}\StringTok{"Anouck"}\NormalTok{,}\StringTok{"Baptiste"}\NormalTok{), }\StringTok{"Biology"}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Anouck Baptiste 
+##       15       17
+\end{verbatim}
+
+\hypertarget{matrix-operations}{%
+\subsection{Matrix operations}\label{matrix-operations}}
+
+In this example, we will use the grade\_class matrix and we will create
+a new matrix that we will name matrix\_ope
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{matrice\_ope }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\FloatTok{0.25}\NormalTok{, }\AttributeTok{times =} \DecValTok{5}\NormalTok{), }\FunctionTok{rep}\NormalTok{(}\FloatTok{0.5}\NormalTok{, }\AttributeTok{times =} \DecValTok{5}\NormalTok{), }\FunctionTok{rep}\NormalTok{(}\FloatTok{0.75}\NormalTok{, }\AttributeTok{times =} \DecValTok{5}\NormalTok{)) }\CommentTok{\# the rep function allows you to repeat a number in times = 5 times}
+\NormalTok{matrice\_ope}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 0.25 0.25 0.25 0.25 0.25 0.50 0.50 0.50 0.50 0.50 0.75 0.75 0.75 0.75 0.75
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{matrice\_ope}\OtherTok{=}\FunctionTok{matrix}\NormalTok{(matrice\_ope, }\AttributeTok{nrow =} \DecValTok{5}\NormalTok{, }\AttributeTok{ncol =} \DecValTok{3}\NormalTok{) }\CommentTok{\# transformation of the vector into a matrix.}
+\NormalTok{matrice\_ope}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2] [,3]
+## [1,] 0.25  0.5 0.75
+## [2,] 0.25  0.5 0.75
+## [3,] 0.25  0.5 0.75
+## [4,] 0.25  0.5 0.75
+## [5,] 0.25  0.5 0.75
+\end{verbatim}
+
+\hypertarget{addition-of-two-matrices}{%
+\subsection{Addition of two matrices}\label{addition-of-two-matrices}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{grade\_class}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          Biology Maths Physical
+## Elise          5    20        6
+## Leon          20    10        6
+## Sully         16     9       16
+## Anouck        15     9       18
+## Baptiste      17    12        8
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{grade\_class }\SpecialCharTok{+}\NormalTok{ matrice\_ope}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          Biology Maths Physical
+## Elise       5.25  20.5     6.75
+## Leon       20.25  10.5     6.75
+## Sully      16.25   9.5    16.75
+## Anouck     15.25   9.5    18.75
+## Baptiste   17.25  12.5     8.75
+\end{verbatim}
+
+\hypertarget{multiplication-of-two-matrices}{%
+\subsection{Multiplication of two
+matrices}\label{multiplication-of-two-matrices}}
+
+In R it is not a matrix calculation where it is a question of
+multiplying the first row of the first matrix by the first column etc.
+It is very basic, first column of the first matrix multiplied by first
+column of the second matrix.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{grade\_class}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          Biology Maths Physical
+## Elise          5    20        6
+## Leon          20    10        6
+## Sully         16     9       16
+## Anouck        15     9       18
+## Baptiste      17    12        8
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{matrice\_ope}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2] [,3]
+## [1,] 0.25  0.5 0.75
+## [2,] 0.25  0.5 0.75
+## [3,] 0.25  0.5 0.75
+## [4,] 0.25  0.5 0.75
+## [5,] 0.25  0.5 0.75
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{grade\_class }\SpecialCharTok{*}\NormalTok{ matrice\_ope}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          Biology Maths Physical
+## Elise       1.25  10.0      4.5
+## Leon        5.00   5.0      4.5
+## Sully       4.00   4.5     12.0
+## Anouck      3.75   4.5     13.5
+## Baptiste    4.25   6.0      6.0
+\end{verbatim}
+
+Likewise for the division
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{grade\_class}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          Biology Maths Physical
+## Elise          5    20        6
+## Leon          20    10        6
+## Sully         16     9       16
+## Anouck        15     9       18
+## Baptiste      17    12        8
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{matrice\_ope}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2] [,3]
+## [1,] 0.25  0.5 0.75
+## [2,] 0.25  0.5 0.75
+## [3,] 0.25  0.5 0.75
+## [4,] 0.25  0.5 0.75
+## [5,] 0.25  0.5 0.75
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{grade\_class}\SpecialCharTok{/}\NormalTok{matrice\_ope}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          Biology Maths Physical
+## Elise         20    40  8.00000
+## Leon          80    20  8.00000
+## Sully         64    18 21.33333
+## Anouck        60    18 24.00000
+## Baptiste      68    24 10.66667
+\end{verbatim}
+
+\hypertarget{the-subtraction-of-two-matrices}{%
+\subsection{The subtraction of two
+matrices}\label{the-subtraction-of-two-matrices}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{grade\_class}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          Biology Maths Physical
+## Elise          5    20        6
+## Leon          20    10        6
+## Sully         16     9       16
+## Anouck        15     9       18
+## Baptiste      17    12        8
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{matrice\_ope}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2] [,3]
+## [1,] 0.25  0.5 0.75
+## [2,] 0.25  0.5 0.75
+## [3,] 0.25  0.5 0.75
+## [4,] 0.25  0.5 0.75
+## [5,] 0.25  0.5 0.75
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{grade\_class}\SpecialCharTok{{-}}\NormalTok{matrice\_ope}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          Biology Maths Physical
+## Elise       4.75  19.5     5.25
+## Leon       19.75   9.5     5.25
+## Sully      15.75   8.5    15.25
+## Anouck     14.75   8.5    17.25
+## Baptiste   16.75  11.5     7.25
+\end{verbatim}
+
+\hypertarget{some-additional-functions-on-matrices}{%
+\subsection{Some additional functions on
+matrices}\label{some-additional-functions-on-matrices}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{colSums}\NormalTok{(grade\_class)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  Biology    Maths Physical 
+##       73       60       54
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{rowSums}\NormalTok{(grade\_class)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Elise     Leon    Sully   Anouck Baptiste 
+##       31       36       41       42       37
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{colMeans}\NormalTok{(grade\_class)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  Biology    Maths Physical 
+##     14.6     12.0     10.8
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{round}\NormalTok{(}\FunctionTok{rowMeans}\NormalTok{(grade\_class),}\AttributeTok{digits =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Elise     Leon    Sully   Anouck Baptiste 
+##    10.33    12.00    13.67    14.00    12.33
+\end{verbatim}
+
+\end{document}

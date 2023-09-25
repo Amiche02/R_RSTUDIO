@@ -1,0 +1,8 @@
+"0","data_Iris=read.table(""iris.csv"", header = T, sep="","", row.names = 1) #row.names permet de définir la premiére "
+"0","#View(data_Iris)"
+"0","dim(data_Iris) "
+"1","[1]"
+"1"," 150"
+"1","   5"
+"1","
+"
