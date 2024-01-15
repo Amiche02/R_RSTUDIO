@@ -1,0 +1,201 @@
+---
+title: "Correction de TP 2"
+author: "Feryal WINDAL"
+date: "4/15/2020"
+output: html_document
+---
+# Construction de vecteur 
+## Question 1
+```{r}
+v<-101:112
+v 
+```
+## Question 2
+```{r}
+w<-rep(c(4,6,3),4) 
+w
+length(w) # pour connaitre la dimension du vecteur w
+```
+
+## Question 3
+
+```{r}
+x<-c(rep(4,8),rep(6,7),rep(3,5)) 
+#autre façon de faire : x<-rep(c(4,6,3),c(8,7,5))
+x
+```
+
+# Encore des vecteurs 
+## Question 1
+```{r}
+poids<-c(28,27.5,27,28,30.5,30,31,29.5,30,31,31,31.5,32,30,30.5) 
+poids 
+```
+
+## Question 2
+```{r}
+poids1<-c(40,39,41,37.5,43)  
+poids1 
+
+```
+
+## Question 3
+### Première méthode
+```{r}
+nouveau.poids<-c(rep(poids1,2),poids[6:15])  
+nouveau.poids 
+length(nouveau.poids) 
+
+```
+
+### Deuxième méthode 
+```{r}
+(nouveau.poids<-c(rep(poids1,2),tail(poids,n=10))) 
+
+```
+
+## Question 4
+```{r}
+#library(xlsx)
+#write.xlsx(nouveau.poids, "Poids.xlsx")
+```
+
+# Exercice d'imagination 
+## Question 1
+```{r}
+ nom<-c("Guillaume","Valérie","Thomas","Julie","Sébastien","Stéphanie",  "Grégory","Ambre","Jean-Sébastien","Camille") 
+nom
+
+```
+## Question 2
+### Première méthode
+```{r}
+age<-c(25,24,23,22,41,40,59,58,47,56)  
+names(age)<-nom 
+age 
+str(age)
+```
+### Deuxième méthode 
+```{r}
+c("Guillaume"=66.5,"Valérie"=50.5,"Thomas"=67.5,"Julie"=52.0, "Sébastien"=83.0,"Stéphanie"=65.0,"Grégory"=79.0,"Ambre"=64.0, "Jean-Sébastien"=81.0,"Camille"=53.0) 
+
+```
+
+Pour un tableau de données
+```{r}
+age<-data.frame(age,row.names=nom)  
+age 
+```
+
+### Question 3
+```{r}
+poids<-c(66.5,50.5,67.5,52,83,65,79,64,81,53)  
+names(poids)<-nom  
+poids 
+```
+
+Pour un tableau de données :
+```{r}
+poids<-data.frame(poids,row.names=nom)  
+poids 
+```
+### Question 4
+```{r}
+taille<-c(1.86,1.62,1.72,1.67,1.98,1.77,1.83,1.68,1.92,1.71)  
+names(taille)<-nom  
+taille 
+```
+```{r}
+taille<-data.frame(taille,row.names=nom)  
+taille 
+```
+### Question 5
+```{r}
+taille<-data.frame(taille,row.names=nom)
+taille 
+```
+
+Autre façon de faire :
+```{r}
+poids.lourds<-poids[poids>80,,drop=FALSE] 
+poids.lourds
+
+```
+
+### Question 6 
+```{r}
+taille.poids.lourds<-taille[poids>=80]  
+taille.poids.lourds 
+```
+ Pour un tableau de données:
+```{r}
+taille.poids.lourds<-taille[poids>=80,,drop=FALSE]  
+taille.poids.lourds 
+```
+ 
+
+### Question 7
+
+```{r}
+taille.vieux.poids.lourds<-taille[poids>=80 & age>=30]  
+taille.vieux.poids.lourds 
+
+```
+
+```{r}
+taille.vieux.poids.lourds<-taille[poids>=80 & age>=30,,drop=FALSE]  
+taille.vieux.poids.lourds 
+```
+
+
+## Les opérateurs logiques
+Le vecteur à construire est une suite d’entiers consécutifs, il suffit d’utiliser la fonction :
+
+### Question 1               
+```{r}
+suite<-1:12  
+suite 
+
+```
+
+### Question 2
+R vous renvoie un vecteur logique. La valeur de chacune de ses coordonnées vous indique si  l’élément qui est à la même position dans le vecteur suite est strictement supérieur à 6 ou non.  Ainsi, dans ce cas, FALSE signifie inférieur ou égal à 6 TRUE signifie strictement supérieur à 6. 
+
+```{r}
+ suite>6 
+
+```
+
+### Question 3
+Nous avons deux façons de faire : 
+```{r}
+!(suite>=6) 
+ suite<6 
+```
+
+
+### Question 4
+Egalement, deux façons de faire : 
+```{r}
+suite==6
+suite>=6&suite<=6
+```
+
+
+### Question 5
+
+```{r}
+suite<=8&&suite>=4 
+
+```
+
+### Question 6
+```{r}
+suite<=4|suite>=8 
+```
+
+### Question 7
+```{r}
+suite<=4||suite>=8 
+```
+

@@ -2,7 +2,9 @@
 title: "R-Programming-Part-2"
 author: "KPOVIESSI OLAOLOUWA AMICHE STEPHANE"
 date: "2023-09-18"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 ---
 
 In this part of the course, we will explore Data Frames, one of the most important data structures for optimal data manipulation. The second part of the course is devoted to the data frame handling.
@@ -37,7 +39,7 @@ In this section we will import the very well known iris file, available with the
 
 2-directly load the dataset from your working directory.
 ```{r}
-setwd("F:/School JUNIA ISEN/Classes/Data Report, Visualisation/Seance 1/Courses 2")
+setwd("F:/PRO/School JUNIA ISEN/Classes/Data Report, Visualisation/Courses 2")
 data("iris")
 View(iris)
 ```
@@ -199,7 +201,7 @@ Another remark in the handling of data frames:
 If, for example, we want to create a new data frame from our iris data set, for example we will select that the qualitative variable part hopefully: 
 ```{r}
 data_iris_qualitative = data_Iris[,5]
-
+data_iris_qualitative
 ```
 
 The problem is that R will consider it as a factor instead of considering it as a data frame. This will complicate our operations if, for example, we want to group it with a data frame.
@@ -290,37 +292,16 @@ R will send us back, TRUE for the first and FALSE for the second.
 Since for the operator AND &, if one of the propositions is false then the set is false.
 Be careful to use && or & since they do not give the same result.
 
-```{r}
-1<=2 & 1<=3
-1<=2 && 1<=3 # & or && have no impact
-
-c(2,2)==c(2,2) & c(3,3)==c(3,3) #it will compare the values of each vector
-c(2,2)==c(2,2) & c(3,3)==c(3,2) #he compared the values of each vector and he indicates that there is a problem since 3 == 2 is false.
-
-c(2,2)==c(2,2) && c(3,3)==c(3,3) 
-c(2,2)==c(2,2) && c(3,3)==c(3,2) # in this example, the && operator will only compare the first values of each vector which returns a TRUE response or it is FALSE. Be careful when handling &&
-```
-
 #OR operator | || also called pipeline.
 
-```{r}
-1<=2 | 1>=3
-1<=2 || 1>=3 # one of the two propositions must be TRUE.
-
-c(2,2)==c(2,2) | c(3,3)==c(3,3)
-c(2,2)==c(2,2) || c(3,3)==c(3,3)
-
-c(2,2)==c(2,2) | c(3,3)==c(2,2)
-c(2,2)==c(2,2) || c(3,3)==c(2,2)
-
-```
-
 #The statements of the if condition
+
 if(condition){
 action 1
 } else {
 action 2
 }
+
 ```{r}
 if(3<=4 & 10==10){
   print("super action 1")
@@ -568,9 +549,9 @@ Another example, we want to know the smallest values of each species.
 ```{r}
 mean_specimen=function(dataframe){
   mean_setosa= colMeans(subset(data_Iris, dataframe$Species=="setosa")[,-5])
- 
+ return(mean_setosa)
 }
-  mean_setosa
+mean_specimen(data_Iris)
 ```
 
 ```{r}

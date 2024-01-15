@@ -1,0 +1,73 @@
+---
+title: "Exercise-Set-2"
+author: "KPOVIESSI OLAOLOUWA AMICHE STEPHANE"
+date: "2023-09-25"
+output: html_document
+---
+
+## Construction de vecteurs
+1. Create the vector v equal to (101 ; 102 ;... ; 112).
+```{r}
+v= c(101:112)
+v
+```
+2. Create the vector w of length 12 formed by four times the sequence of numbers (4 ; 6 ; 3).
+```{r}
+w = rep(c(4,6,3), 4)
+w
+```
+3. Create the vector x consisting of eight times the number 4, seven times the number 6 and five times the number 3.
+```{r}
+x = rep(c(4, 6, 3), c(8, 7, 5))
+x
+```
+
+## More vectors
+1. Enter the weight variable containing the following 15 values : 28 ; 27, 5 ; 27 ; 28 ; 30, 5 ; 30 ; 31 ; 29, 5 ; 30 ; 31 ; 31 ; 31, 5 ; 32 ; 30 ; 30, 5.
+```{r}
+weight = c(28, 27.5, 27, 28, 30.5, 30, 31, 29.5, 30, 31, 31, 31.5, 32, 30, 30.5)
+weight
+```
+2. Enter the variable weight1 containing the following 5 values : 40 ; 39 ; 41 ; 37, 5 ; 43.
+```{r}
+weight1 = c(40, 39, 41, 37.5, 43.)
+weight1
+```
+3. Without redoing any entry, create the variable new.weight containing 20 values : - the five values of weight1 repeated twice - and the last ten values of weight.
+```{r}
+new.weight = c(rep(weight1, 2), weight[5:15])
+new.weight
+```
+
+4. Save, in your working directory, the new.weight variable in a sheet named
+”New Weight” of the Excel workbook ”Weight.xls”.
+```{r}
+write.
+```
+
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

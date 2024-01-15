@@ -1,0 +1,366 @@
+---
+title: "South-Park-Text-Analysis"
+author: "KPOVIESSI OLAOLOUWA AMICHE STEPHANE"
+date: "2023-10-23"
+output: html_document
+---
+
+#Project Description
+Warning: the dataset in this project contains explicit language.
+
+South Park is a satiric American TV show that is popular around the world. In this Project, you will combine two datasets: dialogs from the first 21 seasons (287 episodes) and IMDB ratings of these episodes. Using some text analysis principles, you will answer questions like: Are naughtier episodes more popular? Is Eric Cartman the naughtiest character in the show?
+
+
+South Park is a satiric American TV show. It is an adult show mainly because of its coarse language. I know every episode pretty well, but I wanted to see if I can dig up something more using text analysis.
+That's what we will focus on. We will see how the sentiments and the popularity of episodes evolve over time. We will examine the swear words and their ratio across episodes. We will also answer some questions about the show. Do you think that naughtier episodes tend to be more popular? Is Eric Cartman, the main face of the show, really the naughtiest character? We will have answers to these and more questions soon enough.
+We will be using two datasets. One that contains every line spoken in all the 287 episodes (first 21 seasons) of the show and another that contains mean episode ratings from IMDB. We will be joining, summarizing and visualizing until we've answered all our questions.
+Our best friends will be the tidyverse, tidytext, and ggplot2 packages. Let's not waste any more time and get to it. We'll start slowly by loading all necessary libraries and both of the datasets.
+
+
+#Task 1: Instructions
+
+Load the datasets and take a look at the first few observations.
+
+Load **sp_lines.csv** and **sp_ratings.csv** datasets using read_csv() from the datasets directory.
+Examine the last few observations of sp_lines and sp_ratings.
+Good to know
+
+This project lets you apply the skills from Introduction to the Tidyverse, including filtering, grouping and summarizing data. You will also apply some skills from Sentiment Analysis in R. Lastly, there will also be some visualization in the project, so familiarity with ggplot2 will also be useful, such as the skills taught in Intermediate Data Visualization with ggplot2. Completing these courses will be helpful throughout the project.
+
+Helpful links:
+
+tidyverse cheat sheet
+ggplot2 cheat sheet
+tidytext book
+sweary, an R package with a database of swear words from different languages
+
+```{r}
+setwd("F:/PRO/School JUNIA ISEN/Classes/Data Report, Visualisation/Practices")
+
+#if (!requireNamespace("devtools", quietly = TRUE)) install.packages("devtools") 
+
+#devtools::install_github("pdrhlik/sweary")
+```
+
+
+
+```{r}
+# Load libraries
+library(dplyr)
+library(readr)
+library(tidytext)
+library(sweary)
+
+# Load datasets
+sp_lines <- read_csv("sp_lines.csv")
+sp_ratings <- read_csv("sp_ratings.csv")
+
+# Take a look at the last six observations
+tail(sp_lines)
+tail(sp_ratings)
+```
+
+
+##HINT
+You can read datasets/sp_lines.csv into a data frame named sp_lines and datasets/sp_ratings.csv into a data frame named sp_ratings after loading the packages:
+
+sp_lines <- read_csv("datasets/sp_lines.csv")
+sp_ratings <- read_csv("datasets/sp_ratings.csv")
+Also, don't forget to take a look at the last few observations of both data frames.
+
+#2. Sentiments, swear words, and stemming
+Now that we have the raw data prepared, we will do some modifications. We'll utilize the combined powers of tidyverse and tidytext and make one great dataset that we will work with from now on.
+We will join the dataset together. But most importantly, we will unnest the lines so every row of our data frame becomes a word. It will make our analysis and future visualizations very easy. We will also get rid of stop words (a, the, and, …) and assign a sentiment score based on the AFINN lexicon.
+Our new dataset will have some great new columns that will tell us a lot more about the show!
+
+##Task 2: Instructions
+Create the sp_words data frame with useful columns.
+
+Join sp_lines and sp_ratings into sp.
+Create sp_words by unnesting lines to words. Use unnest_tokens() from tidytext to break up the lines in text and create the column, word. Leave out all stop words using the appropriate _join() function, and create word_stem and swear_word columns.
+View the last six observations.
+en_swear_words is a data frame of English swear words. swear_word (in sp_words) is TRUE when word is a swear word OR if word_stem is the stem of a swear word.
+
+To stem a line, use the wordStem() from the SnowballC package.
+
+The AFINN lexicon was downloaded from the tidytext package and stored in the datasets folder.
+
+Helpful links:
+
+dplyr joins cheat sheet
+unnest_tokens() detailed info
+wordStem() usage
+%in% operator in R
+
+```{r}
+# Load english swear words
+en_swear_words <- sweary::get_swearwords("en") %>%
+    mutate(stem = SnowballC::wordStem(word))
+
+# Load the AFINN lexicon
+afinn  <- read_rds("afinn.rds")
+
+
+# Join lines with episode ratings
+sp <- inner_join(sp_lines, sp_ratings)
+
+# Unnest lines to words, leave out stop words and add a 
+# swear_word logical column
+sp_words <- sp %>%
+    unnest_tokens(word, text) %>%
+    anti_join(stop_words) %>%
+    left_join(afinn) %>%
+    mutate(word_stem = SnowballC::wordStem(word),
+           swear_word = word %in% en_swear_words$word | word_stem %in% en_swear_words$word)
+
+# View the last six observations
+sp_words %>% tail(100)
+```
+
+
+
+##HINT
+Use anti_join() to leave out stop_words.
+
+#3. Summarize data by episode
+Now that the dataset is prepared, we can finally start analyzing it. Let's see what we can say about each of the episodes. I can't wait to see the different swear word ratios. What's the naughtiest one?
+
+##Task 3: Instructions
+Create a by_episode data frame.
+
+Group sp_words by episode_name, rating, and episode_order, and summarize the groups to create swear_word_ratio and avg_sentiment_score.
+Examine the last few six of by_episode.
+Print information about the episode with the highest swear_word_ratio.
+Calling sum() on a logical vector returns the number of TRUE occurrences while n() returns the number of observations in a group.
+
+The sentiment score of an episode is the mean sentiment score of all the words in the episode. value contains a lot of NA values because not every word is in the sentiment lexicon.
+
+```{r}
+# Group by and summarize data by episode
+by_episode <- sp_words %>%
+    group_by(episode_name, rating, episode_order) %>%
+    summarize(
+        swear_word_ratio = sum(swear_word) / n() ,
+        avg_sentiment_score = mean(value, na.rm = TRUE)) %>%
+    arrange(episode_order)
+
+# Examine the last few rows of by_episode
+tail(by_episode)
+
+# What is the naughtiest episode?
+( naughtiest <- by_episode[which.max(by_episode$swear_word_ratio), ] )
+```
+
+
+
+##HINT
+The grouping should look like the following:
+
+by_episode <- sp_words %>%
+    group_by(episode_name, rating, episode_order)
+The naughtiest episode is the one with a max swear_word_ratio.
+
+#4. South Park overall sentiment
+It Hits the Fan – more than 13% of swear words? Now that's a naughty episode! They say a swear word roughly every 8 seconds throughout the whole episode!
+It also has a mean sentiment score of -2. That is pretty low on a scale from -5 (very negative) to +5 (very positive). Sentiment analysis helps us decide what is the attitude of the document we aim to analyze. We are using a numeric scale, but there are other options. Some dictionaries can even classify words to say if it expresses happiness, surprise, anger, etc.
+We can roughly get the idea of the episode atmosphere thanks to the sentiment score. Let's compare all the episodes together and plot the sentiment evolution.
+
+##Task 4: Instructions
+Create a column chart of mean episode sentiment scores.
+
+Set the minimal theme that will be used for this and all future plots.
+Plot sentiment_score for each episode. Use geom_col() to display episode sentiments. Use geom_smooth() to see the trend.
+Helpful links:
+
+More about ggplot2's basic themes
+
+```{r}
+# Load the ggplot2
+library(ggplot2)
+
+# Set a minimal theme for all future plots
+theme_set(theme_minimal())
+
+# Plot sentiment score for each episode
+ggplot(by_episode, aes(y=avg_sentiment_score, x=episode_order)) +
+  geom_col() +
+  geom_smooth()
+```
+
+
+##HINT
+Set the minimal theme like this:
+
+theme_set(theme_minimal())
+
+#5. South Park episode popularity
+The trend in the previous plot showed us that the sentiment changes over time. We can also see that most of the episodes have a negative mean sentiment score.
+Let's now take a look at IMDB ratings. They tell us everything we need to analyze episode popularity. There's nothing better than a nice plot to see if the show is becoming more or less popular over time.
+
+##Task 5: Instructions
+Create an episode popularity plot.
+
+Plot the episode rating for each episode. Use geom_point() to display the ratings and geom_smooth() to see the trend. Add a red, dashed, vertical line for episode 100.
+The parameters col, lty, and xintercept might be useful. For lty and col, please use words and not the numerical equivalent.
+
+```{r}
+# Plot episode ratings
+ggplot(by_episode, aes(x = episode_order, y = rating)) +
+    geom_point() +
+    geom_smooth() +
+    geom_vline(xintercept = 100, col = "red", linetype = "dashed")
+```
+
+
+
+##HINT
+The vertical, red, dashed line at episode 100 is as follows:
+
+geom_vline(xintercept = 100, col = "red", lty = "dashed")
+
+#6. Are naughty episodes more popular?
+South Park creators made a joke in the episode called Cancelled that a show shouldn't go past a 100 episodes. We saw that the popularity keeps dropping since then. But it's still a great show, trust me.
+Let's take a look at something even more interesting though. I always wondered whether naughtier episodes are actually more popular. We have already prepared swear word ratio and episode rating in our by_episode data frame.
+Let's plot it then!
+
+##Task 6: Instructions
+Plot a relationship between episode swear word ratio and popularity.
+
+Plot episode swear_word_ratio against episode rating. Use geom_point() with alpha transparency set to 0.6 and add geom_smooth() to add a smooth trend line. Use percent from the scales package to improve y-axis readability.
+You can call a single function from a package that isn't attache by using the form, package::function.
+
+```{r}
+# Plot swear word ratio over episode rating
+ggplot(by_episode, aes(x = swear_word_ratio, y = rating)) +
+    geom_point(alpha = 0.6, size = 3) +
+    geom_smooth() +
+    scale_y_continuous(labels = scales::percent) +
+    scale_x_continuous(breaks = seq(6, 10, 0.5)) +
+    labs(
+        x = "IMDB rating",
+        y = "Episode swear word ratio"
+)
+```
+
+
+##HINT
+Set y axis to percents using:
+scale_y_continuous(labels = scales::percent)
+
+#7. Comparing profanity of two characters
+Right now, we will create a function that will help us decide which of the two characters is naughtier. We will need a 2x2 matrix to compare them. The first column has to be the number of swear words and the second the number of non-swear words. Let's take a look at the following table. Those are real numbers for Cartman and Butters.
+        swear	non-swear
+Cartman	1318	48116
+Butters	100	11412
+The final step will be to apply a statistical test. Because we are comparing proportions, we can use a base R function made exactly for this purpose. Meet prop.test.
+
+##Task 7: Instructions
+Create a function that compares profanity of two characters.
+
+Create char_2 by filtering words for the second characater.
+Create char_2_summary by summarizing the number of swear words and a number of non-swear words.
+Convert char_both_summary to a matrix and run a prop.test() on it.
+Use tidy from broom to convert the statistical test result to a tidy data frame.
+Once you're done, try playing a bit with the compare_profanity() function. Try this example: compare_profanity("butters", "cartman", sp_words). Replace butters with any other character to compare it with cartman.
+
+Helpful links:
+
+broom package vignette
+dplyr filter documentation
+more info about prop.test
+
+```{r}
+# Create a function that compares profanity of two characters
+compare_profanity <- function(char1, char2, words) {
+    char_1 <- filter(words, character == char1)
+    char_2 <- filter(words, character == char2)
+    char_1_summary <- summarise(char_1, swear = sum(swear_word), total = n() - sum(swear_word))
+    char_2_summary <- summarise(char_2, swear = sum(swear_word), total = n() - sum(swear_word))
+    char_both_summary <- bind_rows(char_1_summary, char_2_summary)
+    result <- prop.test(as.matrix(char_both_summary), correct = FALSE)
+    return(broom::tidy(result) %>% bind_cols(character = char1))
+}
+```
+
+
+##HINT
+Be sure to call tidy() from broom on a result in the return statement. That way the statistical test will become a data frame.
+
+result <- prop.test(as.matrix(char_both_summary), correct = FALSE)
+return(tidy(result) %>% bind_cols(character = char1))
+
+#8. Is Eric Cartman the naughtiest character?
+Anyone who knows the show might suspect that Eric Cartman is the naughtiest character. This is what I think too. We will know for sure very soon. I picked the top speaking characters for our analysis. These will be the most relevant to compare with Cartman. They are stored in the characters vector.
+We will now use map_df() from purrr to easily compare profanity of Cartman with every character in our vector. Our function compare_profanity() always returns a data frame thanks to the tidy() function from broom.
+The best way to answer the question is to create a nice plot again.
+
+##Task 8: Instructions
+Plot the comparison of profanity between Eric Cartman and others.
+
+Apply compare_profanity() to the characters vector to create a consistent data frame with all statistical results in one place.
+Plot estimate1-estimate2 against reordered characters, descending by estimate1.
+Color all geoms based on p.value < 0.05.
+Add an errorbar geom to show estimate confidence intervals.
+ggplot2 geom parameters can have an expression that returns a logical vector for example.
+
+Helpful links:
+
+purrr::map() documentation
+more info about p-values
+
+```{r}
+# Vector of most speaking characters in the show
+characters <- c("butters", "cartman", "kenny", "kyle", "randy", "stan", "gerald", "mr. garrison",
+                "mr. mackey", "wendy", "chef", "jimbo", "jimmy", "sharon", "sheila", "stephen")
+
+# Map compare_profanity to all characters against Cartman
+prop_result <- purrr::map_df(characters, compare_profanity, "cartman", sp_words)
+
+# Plot estimate1-estimate2 confidence intervals of all characters and color it by a p.value threshold
+ggplot(prop_result, aes(x = reorder(character, -estimate1), estimate1-estimate2, color = p.value < 0.05)) +
+    geom_point()+
+    geom_errorbar(aes(ymin = conf.low, ymax = conf.high), show.legend = FALSE) +
+    geom_hline(yintercept = 0, col = "red", linetype = "dashed") +
+    theme(axis.text.x = element_text(angle = 60, hjust = 1))
+```
+
+##HINT
+You need to create prop_result using the map_df() function from purrr:
+
+prop_result <- map_df(characters, compare_profanity, "cartman", sp_words)
+This is how to use reorder() to reorder the characters and how to create the errorbar:
+
+ggplot(prop_result, aes(x = reorder(character, -estimate1), estimate1-estimate2, color = p.value < 0.05)) +
+    geom_point() +
+    geom_errorbar(aes(ymin = conf.low, ymax = conf.high), show.l
+    
+
+#9. Let's answer some questions
+We included Eric Cartman in our characters vector so that we can easily compare him with the others. There are three main things that we should take into account when evaluating the above plot:
+Spread of the error bar: the wider, the less words are spoken.
+Color of the error bar: blue is statistically significant result (p-value < 0.05).
+Position of the error bar: prop.test estimate suggesting who is naughtier.
+Are we able to say if naughty episodes are more popular? And what about Eric Cartman, is he really the naughtiest character in South Park? And if not, who is it?
+
+##Task 9: Instructions
+Answer a few questions based on the completed analysis.
+
+Are naughty episodes more popular? TRUE/FALSE
+Is Eric Cartman the naughtiest character? TRUE/FALSE
+If he is, assign an empty string, otherwise, write its name.
+
+```{r}
+# Are naughty episodes more popular? TRUE/FALSE
+naughty_episodes_more_popular <- ....
+
+# Is Eric Cartman the naughtiest character? TRUE/FALSE
+eric_cartman_naughtiest <- ....
+
+# If he is, assign an empty string, otherwise write his name
+who_is_naughtiest <- ....
+```
+
+
+
+##HINT
+If Eric Cartman is not the naughtiest character, then don't forget that all the names are lowercase.

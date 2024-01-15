@@ -1,0 +1,695 @@
+---
+title: "Data Visualization"
+author: "Feryal WINDAL"
+date: "3/10/2023"
+output: html_document
+---
+Ce cours est inspiré du livre "R pour la statistique et la Science des données" de François Husson.
+
+This course is inspired by the book "R for Statistics and Data Science" by François Husson.
+```{r, echo=FALSE}
+#setwd("E:/ENSEIGNEMENT/COURS-DATA-SCIENCE-HEI-enseignement")
+```
+# Introcuction 
+Les graphiques constituent souvent le point de départ d'une analyse statistique.
+Un des avantage de R est la facilité avec laquelle l'utilisateur peut produire des graphiques de toute nature.
+
+
+
+#Introduction 
+Data visualization is an essential skill for data scientists. It combines statistics and design in meaningful and appropriate ways. On the one hand, data vis is a form of graphical data analysis, emphasizing accurate representation and interpretation of data. On the other hand, data vis relies on good design choices, not only to make our plots attractive, but to also aid both the understanding and communication of results. On top of that, there is an element of creativity, since at it's heart, data vis is a form of visual communication.
+
+
+We will first focus on some basic graphics in R language. More sophisticated representations are then proposed.
+To begin with, it may be interesting to look at some examples of graphical representations that can be built with R.
+The htps site: www.r-graph-gallery.com is particularly well done: it offers many representations and gives the lines of codes to achieve them.
+
+****************
+La visualisation de données est une compétence essentielle pour les scientifiques des données. Elle combine la statistique et le design de manières significatives et appropriées. D'un côté, la visualisation de données est une forme d'analyse graphique des données, mettant l'accent sur la représentation précise et l'interprétation des données. De l'autre côté, elle repose sur de bons choix de design, non seulement pour rendre nos graphiques attrayants, mais aussi pour faciliter la compréhension et la communication des résultats. En outre, il y a un élément de créativité, car au fond, la visualisation de données est une forme de communication visuelle.
+
+Nous allons nous intéressé dans dans un premier temps à quelques graphiques basiques en langage R. des représentations plus sophistiquées sont ensuite proposées. 
+Pour commencer, il peut être intéressant de regarder quelques exemples de représentations graphiques pouvant être construites avec R. 
+Le site hhtps:www.r-graph-gallery.com est particulièrement bien fait : il propose de nombreuses représentations et donne les lignes de codes pour les réaliser.
+
+**********************************************************
+
+# 3.1 Conventional graphics functions
+
+Pour cette exploration, nous allons travailler avec le jeu de données ozone.txt. 
+On considère à cet effet un jeu de données issu du Laboratoire de mathématiques appliquées de l'Agrocampus Ouest qui contient 112 données recueillies à Rennes durant l'été 2001. On y trouve les 5 variables suivantes :
+
+obs : mois-jour ;
+maxO3 : teneur maximale en ozone observée sur la journée (en μ\gr/m3
+ ) ;
+ T12 température observée à  12 h  ;
+Vx12 : composante est-ouest du vent à  12 h ;
+vent : orientation du vent à 12 h ;
+pluie : occurrence ou non de précipitations.
+
+Les variables T12, maxO3 et Vx12 sont des variables quantitatives continues (numérique) alors que vent et pluie sont des facteurs: 
+
+
+************************************************************
+For this exploration, we will be working with the ozone.txt dataset.
+For this purpose, we consider a dataset from the Applied Mathematics Laboratory of Agrocampus Ouest which contains 112 data collected in Rennes during the summer of 2001. It contains the following 5 variables:
+
+obs: month-day;
+maxO3: maximum ozone content observed during the day (in μ \ gr / m3
+  );
+  T12 temperature observed at 12h;
+Vx12: east-west component of the wind at 12 o'clock;
+wind: wind direction at 12 o'clock;
+rain: occurrence or not of precipitation.
+
+The variables T12, maxO3 and Vx12 are continuous quantitative variables (numerical) while wind and rain are factors:
+```{r}
+ozone <- read.table("https://r-stat-sc-donnees.github.io/ozone.txt",header=TRUE,stringsAsFactors = TRUE)
+ozone <- ozone[,c("T12","maxO3","vent","pluie","Vx12")]
+summary(ozone)
+```
+
+
+```{r}
+View(ozone)
+```
+
+## 3.1.1 The function plot 
+La fonction plot est une fonction générique de R, i.e. une fonction qui est appelée par le même ordre mais qui donne des résultats différents suivant la classe de l'objet sur lequel elle est appliquée.
+Elle permet de représenter tous les types de données. L'utilisation classique de la fonction plot consiste à représenter un nuage de points d'une variable y en fonction d'une variable x.
+
+De façon classique en statistique, la fonction plot s'écrit avec des formules du type y~x. prenons l'exemple de l'ozone et représentations différentes couples de variables.
+Commençons par représenter deux variables quantitatives; maxO3 et T12:
+
+
+************************************************************
+The plot function is a generic function of R, i.e. a function which is called by the same order but which gives different results depending on the class of the object on which it is applied.
+It allows you to represent all types of data. The classic use of the plot function consists in representing a scatter plot of a variable y as a function of a variable x.
+
+Conventionally in statistics, the plot function is written with formulas of the type y~x. Let us take the example of ozone and representations of different pairs of variables.
+Let's start by representing two quantitative variables; maxO3 and T12:
+```{r}
+plot(maxO3~T12,data=ozone)
+```
+Pour représenter une variable quantitative (max03) en fonction d'une variable qualitatives (vent), nous écrivons de la même façon :
+
+************************************************************
+To represent a quantitative variable (maxIO3) as a function of a qualitative variable (wind), we write in the same way:
+
+```{r}
+plot(maxO3~vent,data=ozone,xlab="Secteur du vent",ylab="Pic d'ozone")
+```
+La fonction plot retourne dans ce cas un boite à moustaches par modalités de la variable vent.
+Ce graphique permet de voir qu'il existe un effet de la variable vent sur l'ozone. Ici, le vent d'Est semble associé à de plus forte concentrations d'ozone. Ce graphique peut être obtenu grâce à la fonction boxplot:
+
+************************************************************
+
+The plot function returns in this case a boxplot by modalities of the variable wind.
+This graph shows that there is an effect of the wind variable on ozone. Here, the easterly wind seems to be associated with higher concentrations of ozone. This graph can be obtained using the boxplot function:
+
+```{r}
+boxplot(maxO3~vent,data=ozone)
+```
+Compte tenu de la nature des variables, la fonction plot a choisi d'utiliser la fonction plot car cela est considéré comme plus pertinent.
+
+On peut également représenter deux variables qualitatives par un diagramme en bandes: 
+
+************************************************************
+Given the nature of the variables, the plot function chose to use the plot function because it is considered more relevant.
+
+We can also represent two qualitative variables by a bar graph:
+
+```{r}
+plot(pluie~vent,data=ozone)
+```
+Cette figure nous indique que le temps de type "pluie" est proportionnellement plus important quand le vent souffle d'ouest (ce qui semble assez naturel à Rennes, d'où proviennent les mesures). De plus, puisque c'est la bande la plus large, c'est aussi le vent le plus fréquent à Rennes.
+
+On peut enfin représenter une variable qualitative en fonction d'une variable quantitative, ici vent en fonction de T12. 
+
+
+************************************************************
+This figure shows us that the "rain" type weather is proportionally greater when the wind blows from the west (which seems quite natural in Rennes, where the measurements come from). Moreover, since it is the widest strip, it is also the most frequent wind in Rennes.
+
+Finally, we can represent a qualitative variable as a function of a quantitative variable, here wind as a function of T12.
+
+```{r}
+plot(ozone[,"T12"],ozone[,"vent"],pch=5,yaxt="n",xlab="T12",ylab="vent")
+axis(side=2,at=1:4,labels=levels(ozone[,"vent"]))
+```
+Notons qu'il est nécessaire de retravailler le graphique : l'argument yaxt = "n" supprime les libellés des graduations de l'axe y qui prennent ici par défaut les différentes modalités de la variable qualitatives converties en numérique : 1 à 4. La fonction axis permet alors de renommer les libellés des graduations.
+Ce graphique est intéressant quand il y a peu de mesures par modalités. Dans le cas contraires, on représente les données à l'aide de boites à moustaches.
+
+Même si intrinsèquement, la fonction plot attend en entrée les deux arguments x et y associés aux abscisses et ordonnées, il est possible de ne préciser qu'un seul argument. Par exemple, pour uen variable quantitative, R dessine séquentiellement cette variable avec un abscisse le numéro de l'observation:
+
+
+
+************************************************************
+
+Note that it is necessary to rework the graph: the argument yaxt = "n" removes the labels of the graduations of the y axis which here take by default the different modalities of the qualitative variable converted into numeric: 1 to 4. The axis function then allows you to rename the labels of the graduations.
+This graph is interesting when there are few measures by modality. Otherwise, the data is represented using boxplots.
+
+Even if intrinsically, the plot function expects as input the two arguments x and y associated with the abscissas and ordinates, it is possible to specify only one argument. For example, for a quantitative variable, R draws this variable sequentially with an abscissa the number of the observation:
+```{r}
+plot(ozone[,"maxO3"], xlab="num.", ylab="maxO3", cex=.5, pch=4)
+```
+
+Cette commande retourne un dessin où, par défaut, l'abscisse est la suite ordonnée appelée "num" des observations de 1 à n avec n le nombre d'observations.
+
+La taille du symbole peut être contrôlée via l'argument cex qui permet de gérer le facteur d'augmentation (ou de diminution) de taille (par défaut cex= 1) . L'argument pch permet de préciser la forme des points . Cet argument peut prendre des valeurs numériques entre 0 à 25 ou un caractère directement retranscrit à l'écran. Je vous invite à tester.
+
+Il est également possible de modifier le type du tracé via l'argument type :"p" pour tracer des points (option par défaut), "l" (line) pour relier, "b" ou "o" pour faire les deux. L'argument type permet aussi de tracer des bâtons verticaux ("h, high-density) ou des escaliers après les points ("s", step) ou avant ("S" step). Je vous invite également à tester ces différents paramètres.
+
+L'évolution du maximum journalier de l'ozone durant l'été 2001 est obtenu avec l'argument "type="l". Ce graphique est très classique pour représenter des données temporelles :
+
+
+************************************************************
+This command returns a drawing where, by default, the abscissa is the ordered sequence called "num" of the observations from 1 to n with n the number of observations.
+
+The size of the symbol can be controlled via the argument cex which allows to manage the factor of increase (or decrease) of size (by default cex = 1). The pch argument allows you to specify the shape of the points. This argument can take numeric values between 0 to 25 or a character directly transcribed on the screen. I invite you to test.
+
+It is also possible to modify the type of the plot via the type argument: "p" to plot points (default option), "l" (line) to connect, "b" or "o" to do both. The type argument also allows you to draw vertical bars ("h, high-density) or stairs after the points (" s ", step) or before (" S "step). I also invite you to test these different parameters .
+
+The evolution of the daily ozone maximum during the summer of 2001 is obtained with the argument "type =" l ". This graph is very classic to represent temporal data:
+
+
+
+```{r}
+plot(ozone[,"maxO3"], xlab="num.", ylab="maxO3", type="l")
+```
+
+
+
+## 3.1.2 Representation of a distribution
+
+Pour représenter la distribution d'une variable continue, par exemple le vecteur de numérique ozone[,"maxO3]. Il existe des solutions classiques déjà programmées. 
+
+L'istogramme (ci-dessous) de la variable maxO3 est un estimateur de la densité si l'on spécifie l'argument proba=TRUE dans la fonction hist.
+
+
+************************************************************
+
+To represent the distribution of a continuous variable, for example the digital vector ozone [, "maxO3]. There are classical solutions already programmed.
+
+The histogram (below) of the variable maxO3 is an estimator of the density if we specify the argument proba = TRUE in the hist function.
+
+```{r}
+hist(ozone[,"maxO3"], main="Histogramme", prob=TRUE, xlab="Ozone", col="lightblue")
+```
+Un estimateur à noyau de la densité de la variable maxO3 peut être obtenu grâce à la fonction density.
+
+************************************************************
+A kernel estimator of the density of the variable maxO3 can be obtained using the density function.
+
+```{r}
+plot(density(ozone[,"maxO3"]), main="Estimateur de noyau", xlab="Ozone")
+```
+Pour représenter la distribution d'une variable qualitative, on utilse un diagramme en barres, qui représente simplement en appliquant la fonction plot sur le vecteur des modalités. Pour le facteur vent : 
+
+************************************************************
+To represent the distribution of a qualitative variable, we use a bar chart, which represents simply by applying the plot function on the vector of categories. For the wind factor:
+
+```{r}
+plot(ozone[,"vent"])
+```
+Le diagramme en barres peut aussi être dessiné via la fonction barplot appliquée à un vecteur donnant les occurences de chaque niveau. On calcul ici les occurrences par la fonction table avant de dessiner le diagramme : 
+
+************************************************************
+The bar chart can also be drawn via the barplot function applied to a vector giving the occurrences of each level. We calculate here the occurrences by the table function before drawing the diagram:
+
+
+```{r}
+barplot(table(ozone[,"vent"]))
+```
+
+## 3.1.3 Additions to graphics
+
+Une fois le graphique tracé, il est possible de le compléter par d'autres informations : ajouts de lignes (lines), points (points), textes (text), symboles (cercles, carrés, étoiles...symbols), flèches (arrows), segments (segments) ou polygones (polugon). Nous allons uniquement présenter les ajouts de textes, de lignes et points.
+
+Nous reprenons la représentation graphique du maximum d'ozone maxO3 en fonction de la température T12. Pour faire apparaitre la date, il est nécéssaire d'ajouter du texte (text) au nuage de points obtenu par plot. Nous écrivons uniquement le mois et le jour (i.e. caractères 5 à 8 de noms de lignes) avec une taille de fonte diminuée. Le texte est ajoutée au-dessus (pos=3) avec un décalage de 0.3 (offset): 
+
+************************************************************
+
+Once the graph has been drawn, it is possible to complete it with other information: additions of lines (lines), points (points), texts (text), symbols (circles, squares, stars ... symbols), arrows ( arrows), segments (segments) or polygons (polugon). We will only present the additions of texts, lines and points.
+
+We use the graphical representation of the maximum ozone maxO3 as a function of the temperature T12. To display the date, it is necessary to add text to the point cloud obtained by plot. We only write the month and day (i.e. 5-8 characters of row names) with a reduced font size. Text is added above (pos = 3) with an offset of 0.3 (offset):
+
+
+```{r}
+plot(maxO3~T12,data=ozone, pch=20)
+text(ozone[,"T12"],ozone[,"maxO3"], substr(rownames(ozone),5,8), cex=.75, pos=3, offset=.3)
+```
+
+Nous ajoutons une ligne vertical pour matérialiser, avec la fonction abline, qu'il ne pleut pas lorsque la température est supérieure à 27 degrés.
+
+
+************************************************************
+
+We add a vertical line to materialize, with the abline function, that it does not rain when the temperature is above 27 degrees.
+
+```{r}
+plot(maxO3~T12,data=ozone, pch=20)
+text(ozone[,"T12"],ozone[,"maxO3"], substr(rownames(ozone),5,8), cex=.75, pos=3, offset=.3)
+abline(v=27,lty=4)
+```
+On peut aussi ajouter une ligne horizontale avec abline(h=) ou enconre en précisant l'ordonnée à l'origine et la pente avec abline(c(ordonnee, pente)).
+Le paramètre lty (line type) permet de contrôler le type de ligne (1 : trait plein, 2: tirets, 3: pointillés, ect).
+
+Comme son nom l'indique, la fonction abline ajoute une ligne sur le graphique existant. Si nous souhaitons représenter deux courbes pour comparer, par exemple, l'évolution de l'ozone sur deux semaines différentes, il faut utiliser la fonction lines.
+Comprons l'évolution de l'ozone pendant les deux premières semaines: 
+
+
+************************************************************
+You can also add a horizontal line with abline (h =) or enconre by specifying the y-intercept and the slope with abline (c (y-axis, slope)).
+The lty (line type) parameter is used to control the type of line (1: solid line, 2: dashes, 3: dotted lines, ect).
+
+As the name suggests, the abline function adds a line to the existing chart. If we want to represent two curves to compare, for example, the evolution of ozone over two different weeks, we must use the lines function.
+Let's understand the evolution of ozone during the first two weeks:
+
+
+
+```{r}
+plot(ozone[1:7,"maxO3"],type="l")
+lines(ozone[8:14,"maxO3"],col="red") # ajout de la 2ème semaine
+```
+Ce graphique n'indique pas les sixième et septième observations de cette semaine. En effet, un tracé de graphique nécessite de connaître les minima et maxima pour les abcisses et les ordonnées afin de préparer les axes, les échelles, etc. Ici, le minimum de la seconde ligne est plus faible que celui de la première. La mise à l'échelle du graphique est faite pour la fonction plot.
+Lors de l'appel, cette fonction n'a connaissance que des informations concernant l'instruction plot. La mise à l'echelle n'est pas automatique après un ordre lines (ou points), il faut donc proposer dès l'ordre plot le minimum et le maximum des deux semaines. Cette dernière donne le minimum et le maximum. Cet argument indique à la fonction plot les ordonnées entre lesquelles se situera le graphique.
+
+
+
+************************************************************
+This graph does not show the sixth and seventh observations for this week. Indeed, a graph drawing requires knowing the minima and maxima for the abscissas and the ordinates in order to prepare the axes, scales, etc. Here, the minimum of the second line is lower than that of the first. The scaling of the graph is done for the plot function.
+When called, this function is only aware of information concerning the plot instruction. The scaling is not automatic after a lines (or points) order, it is therefore necessary to propose from the plot order the minimum and the maximum of two weeks. The latter gives the minimum and the maximum. This argument tells the plot function the ordinates between which the graph will lie.
+
+```{r}
+ecarty <- range(ozone[1:7,"maxO3"],ozone[8:14,"maxO3"])
+plot(ozone[1:7,"maxO3"],type="l",ylim=ecarty,lty=1)
+lines(ozone[8:14,"maxO3"],col="red",lty=1)
+```
+Bien sûr, si les abscisses sont les mêmes, il est inutile de prévoir le minimum et le maximum sur les abscisses.
+
+************************************************************
+Of course, if the x-coordinates are the same, it is useless to provide the minimum and the maximum on the x-coordinates.
+
+# 3.2 Graphics functions with ggplot2
+Le package ggplot2 est un outil puissant et de plus en plus utilisé permettant de visualiser des données. Les graphes proposés par ggplot2 sont généralement plus élaborés et mieux finalisés que les graphes effectués avec les fonctions classiques de R. 
+Ce package permet également d'obtenir des représentations graphiques par sou-groupes d'individus avec très peu de lignes de code. La disposition des graphes et la gestion des titres et légendes sont le plus souvent gérées automatiquement.
+
+La syntaxe de ggplot2 est spécifique et totalement différentes de celle des graphiques conventionnels de R. Elle est de type "Grammar of Graphics" et se structure comme un ensemble de commandes indépendantes. Cette section n'est qu'une introduction. Pour plus de détails, vous pouvez vous référer à Wickham, l'auteur du package. Vous pouvez également consulter (et garder à portée de mains) l'antisèche, la "cheat Sheet ggplot".
+
+
+************************************************************
+
+The ggplot2 package is a powerful and increasingly used tool for visualizing data. The graphs proposed by ggplot2 are generally more elaborate and better finalized than the graphs carried out with the classic functions of R.
+This package also makes it possible to obtain graphical representations by sub-groups of individuals with very few lines of code. The layout of the graphs and the management of titles and legends are most often managed automatically.
+
+The syntax of ggplot2 is specific and totally different from that of conventional R graphics. It is of the "Grammar of Graphics" type and is structured as a set of independent commands. This section is only an introduction. For more details, you can refer to Wickham, the author of the package. You can also consult (and keep handy) the cheat sheet, the "cheat sheet ggplot2".
+
+
+## 3.2.1 First graphics with ggplot2
+
+On considère maintenant le jeu de données diamonds qui contient le prix ainsi que certaines caractéristiques de 54000 diamants. Afin d'alléger les représentations graphiques, on se restreint à un sous-échantillon de taille 5000 du jeu de données diamonds : 
+
+
+************************************************************
+
+We now consider the diamonds dataset which contains the price as well as some characteristics of 54,000 diamonds. In order to simplify the graphical representations, we restrict ourselves to a sub-sample of size 5000 of the diamonds dataset:
+```{r,warning=FALSE,message=FALSE}
+library(ggplot2)
+set.seed(1234)
+diamonds <- diamonds[sample(nrow(diamonds),5000),]
+head(diamonds)
+```
+
+```{r}
+library(dplyr)
+diamonds= as_tibble(diamonds)
+str(diamonds)
+```
+Pour obtenir la représentation graphique souhaité, l'approche ggplot2 consiste à segmenter les instructions. Prenons l'exemple d'un diagramme en barres pour la variables cut qui représente la qualité de la coupe du diamant. Pour ce type de représentation, il est nécessaire de spécifier :
+- le jeu de données : diamonds
+- la variable que l'on souhaite représenter : cut;
+- le type de représentation voulu : diagramme en barres.
+Le package ggplot2 utilise cette décomposition pour constuire le diagramme en barres.
+
+
+************************************************************
+
+To achieve the desired graphical representation, the ggplot2 approach consists of segmenting the instructions. Take the example of a bar chart for the variable cut which represents the quality of the cut of the diamond. For this type of representation, it is necessary to specify:
+- the dataset: diamonds2
+- the variable that we want to represent: cut;
+- the type of representation desired: bar chart.
+The ggplot2 package uses this decomposition to build the bar chart.
+
+```{r,warning=FALSE,message=FALSE}
+ggplot(diamonds)+aes(x=cut)+geom_bar()
+```
+
+Le jeu de données est renseigné par la fonction ggplot, la variable à représenter par la fonction aes, le type de représentation est ensuite spécifié par la fonction geom_bar(). Les trois instructions sont séparées par un "+". C'est le schéma classique de construction de graphes avec ggplot2. Avec un protocole identique, on obtient l'histogramme de la variable continue price.
+
+************************************************************
+
+The data set is filled in by the ggplot function, the variable to be represented by the aes function, the type of representation is then specified by the geom_bar() function. The three instructions are separated by a "+". This is the classic scheme of constructing graphs with ggplot2. With an identical protocol, we obtain the histogram of the continuous price variable.
+
+```{r,warning=FALSE,message=FALSE}
+ggplot(diamonds)+aes(x=price)+geom_histogram()
+```
+Les deux représentations précédentes nécessitent la spécification d'une seule variable: cut pour le diagramme en barres et price pour l'histogramme. Cependant, de nombreuses représentations nécessitent plus d'une variable. Pour un nuage de points par exemple, deux variables sont à spécifier. Il suffit dans ce cas d'indiquer ces deux variables dans la fonction aes. Pour représenter le prix d'un diamant en fonction de son nombre de carats, on utilise : 
+
+************************************************************
+The previous two representations require the specification of a single variable: cut for the bar chart and price for the histogram. However, many representations require more than one variable. For a point cloud for example, two variables must be specified. In this case, it suffices to indicate these two variables in the aes function. To represent the price of a diamond according to its number of carats, we use:
+
+
+
+```{r,warning=FALSE,message=FALSE}
+ggplot(diamonds)+aes(x=carat,y=price)+geom_point()
+```
+
+## 3.2.2 ggplot2 grammar
+Ainsi, une représentation graphique ggplot se construit à partir d'un ensemble d'éléments indépendants qui constituent la grammaire de la syntaxe. Les principaux éléments de cette grammaires sont : 
+- Data (ggplot) : le jeu de données contenant les variables utilisées; - Aesthetics (aes) : les variables à représenter, on peut également inclure des couleurs ou tailles si ces dernières sont associées à des variables; 
+- Geometrics (geom_...): le type de représentation graphique souhaitée; 
+- Statistics (stat_...): les éventuelles transformations des données pour la représentation souhaitée;
+- Scale (scale_...): permet de contrôler le lien entre les données et les aesthetics (modification des couleurs, gestion des axes...)
+Nous présentons dans la suite quelques notions élémentaires sur ces éléments.
+
+
+
+************************************************************
+Thus, a ggplot graphical representation is constructed from a set of independent elements which constitute the grammar of the syntax. The main elements of this grammar are:
+- Data (ggplot): the data set containing the variables used; - Aesthetics (aes): the variables to be represented, we can also include colors or sizes if these are associated with variables;
+- Geometrics (geom_...): the type of graphic representation desired;
+- Statistics (stat_...): any data transformations for the desired representation;
+- Scale (scale_...): allows to control the link between data and aesthetics (modification of colors, management of axes ...)
+We present in the following some elementary notions on these elements.
+
+
+### Data and aesthetics: 
+Ces deux élément de la grammaire spécifient le jeu de données et les variables que l'on souhaite représenter. Le jeu de données est un data frame (ou un data-table, ou tibble) que l'on renseigne dans la fonction ggplot. les variables sont spécifiées dans la fonctions aes. Cette fonction admet également des arguments tels que color, size, fill. Ces arguments sont à utiliser lorsqu'une couleur ou une taille est définie à partir d'une variable du jeu de données. Si on veut par exemple visualiser le prix d'un diamant en fonction de son nombre de carats avec une couleur différente selon les modalités de la variable cut, on utilise : 
+
+
+************************************************************
+
+These two elements of the grammar specify the data set and the variables that we want to represent. The dataset is a data frame (or a data-table, or tibble) that is entered in the ggplot function. the variables are specified in the aes function. This function also accepts arguments such as color, size, fill. These arguments are to be used when a color or a size is defined from a variable in the dataset. If, for example, we want to visualize the price of a diamond according to its number of carats with a different color according to the modalities of the variable cut, we use:
+
+
+```{r}
+ggplot(diamonds)+aes(x=carat,y=price,color=cut)
+```
+### Geometrics
+La commande précédente ne renvoie pas de graphique !! Elle spécifie uniquement les variables du jeu de données que l'on souhaite utiliser dans la représentation.
+Les éléments geom_... précisent le type de représentation souhaitée. Pour obtenir le nuage carat x price avec une couleur différente selon cut, on exécute donc :
+
+************************************************************
+The previous command does not return a graph !! It only specifies the variables of the dataset that we want to use in the representation.
+The geom_... elements specify the type of representation desired. To obtain the carat x price cloud with a different color according to cut, we therefore execute:
+```{r}
+ggplot(diamonds)+aes(x=carat,y=price,color=cut)+geom_point()
+```
+
+```{r}
+ggplot(diamonds)+aes(x=carat,y=price)+geom_point(color="red")
+```
+Chaque fonction geom_... admet également des arguments particuliers permettant de modifier le graphe (couleur, taille de points, épaisseur de traits, etc). Si on souhaite par exemple représenter un nuage de points rouges, c'est dans la fonction geom_...point, non dans la fonction aes, qu'il faut utiliser l'argument color. De même, pour obtenir un diagramme en barres bleu, on utilise  fill= "blue" dans geom_bar.
+
+************************************************************
+
+Each geom_... function also admits particular arguments allowing to modify the graph (color, size of points, thickness of lines, etc.). If one wishes for example to represent a cloud of red points, it is in the function geom _... point, not in the function aes, that it is necessary to use the argument color. Likewise, to obtain a blue bar diagram, we use fill = "blue" in geom_bar.
+
+```{r}
+ggplot(diamonds)+aes(x=cut)+geom_bar(fill="blue")
+```
+
+De nombreuses représentations nécessitent des transformations plus complexes que l'application usuelle. C'est par exemple le cas de l'histogramme où il faut calculer le nombre d'individus dans chaque classe pour déduire les hauteurs de l'histogramme. Les statistics permettent de gérer ces éléments intermédiares dans les graphes. Ils sont renseignés dans l'argument stat des fonctions geom_.... Pour geom_histogram, la valeur par défaut est par exemple stat="bin". Cet argument permet de calculer 2 indicateurs: 
+- count: nombre de points dans chaque classe;
+- density : densité pour chaque classe
+
+Par défaut, la fonction geom_histogram représente en ordonnée le premier de ces deux indicateurs, à l'occurrence count. Anisi, la commande renvoie l'histogramme où figure en ordonnée le nombre d'individus par classe, non la densité, et donne le même résultat que :
+
+
+************************************************************
+
+Many representations require more complex transformations than the usual application. This is for example the case of the histogram where it is necessary to calculate the number of individuals in each class to deduce the heights of the histogram. The statistics are used to manage these intermediate elements in the graphs. They are entered in the stat argument of the geom _.... functions. For geom_histogram, the default value is for example stat = "bin". This argument allows to calculate 2 indicators:
+- count: number of points in each class;
+- density: density for each class
+
+By default, the geom_histogram function represents on the ordinate the first of these two indicators, at the count instance. Then, command returns the histogram where the number of individuals per class appears on the ordinate, not the density, and gives the same result as:
+```{r}
+ggplot(diamonds)+aes(x=price)+geom_histogram(bins=40)
+```
+On peut également écrire autremment. Ici, si on souhaite préciser le nom de l'indicateur dans la fonction aes en utilisant le format ..nom.. 
+
+************************************************************
+We can also write differently. Here, if we want to specify the name of the indicator in the aes function using the format ..name ..
+
+```{r}
+ggplot(diamonds)+aes(x=price,y=..count..)+geom_histogram(bins=40)
+```
+Pour représenter l'histogramme de la densité, on utilise donc: 
+
+************************************************************
+To represent the histogram of the density, we therefore use:
+
+```{r}
+ggplot(diamonds)+aes(x=price,y=..density..)+geom_histogram(bins=40)
+```
+Le package ggplot2 propose une alternative pour obtenir des représentation faisant intervenir des transformations des données, il s'agit des fonction stat_... .On pourra par exemple obtenir les deux histogrammes suivants : 
+
+************************************************************
+
+The ggplot2 package offers an alternative to obtain representations involving data transformations, these are the functions stat _.... We can for example obtain the following two histograms:
+```{r}
+ggplot(diamonds)+aes(x=price)+stat_bin(bins=40)
+```
+
+
+```{r}
+ggplot(diamonds)+aes(x=price,y=..density..)+stat_bin(bins=40)
+```
+
+Nous avons vu que les fonctions geom_... possèdent un argument stat. De la même façon, les fonctions stat_... possèdent un argument geom. En modifiant cet argument, on change la représentation graphique. Par exemple, la fonction stat_smooth, qui permet de faire le lissage d'un nuage de points, admet par défaut l'argument geom="smooth". elle permet de représenter le lissage accompagné d'une bande de confiance. Si on utilise geom="line", la bande de confiance n'est plus représenté, avec geom="point" le lissage est représenté en pointillé.
+************************************************************
+We have seen that the geom_... functions have a stat argument. Likewise, the stat_... functions have a geom argument. By modifying this argument, we change the graphical representation. For example, the stat_smooth function, which allows you to smooth a point cloud, admits by default the argument geom = "smooth". it makes it possible to represent the smoothing accompanied by a confidence band. If we use geom = "line", the confidence band is no longer represented, with geom = "point" the smoothing is represented in dotted lines.
+
+```{r}
+ggplot(diamonds)+aes(x=carat,y=price)+geom_point(size=0.5)+
+  stat_smooth(method="loess",size=2)
+```
+
+
+```{r}
+ggplot(diamonds)+aes(x=carat,y=price)+geom_point(size=0.5)+
+  stat_smooth(method="loess",geom="line",color="blue",size=2)
+```
+
+
+```{r}
+ggplot(diamonds)+aes(x=carat,y=price)+geom_point(size=0.5)+
+  stat_smooth(method="loess",geom="point",color="blue",size=2)
+```
+De nombreuses représentations graphiques peuvent être obtennues en utilisant indifféremment les fonctions de type geom_... ou stat_... On pourra par exemple obtenir les lissages précédents avec la fonction geom_smooth. C'est à vous de choisir la syntaxe que vous préférez. 
+
+************************************************************
+Numerous graphic representations can be obtained by using the geom _... or stat _... type functions indifferently. For example, the previous smoothings can be obtained with the geom_smooth function. It's up to you to choose the syntax you prefer.
+###########################################################
+
+### Scales 
+Les scales contiennent tous les paramètres qui font le lien entre les données (data) et les aesthétics. Ils permettent généraelement d'affiner le graphe en modifiant par exemple des palettes de couleurs ou en créant des dégradés de couleurs, ou encore en gérant les axes du graphe. Les fonction scales suivent le schéma suivant :
+- elles commencent par scale_;
+_ suivi du nom de l'aesthétics que l'on souhaite modifier (color_, fill_, x_...);
+_ et se terminent par le nom du scale: manual, identity...
+
+
+************************************************************
+
+Scales contain all the parameters that make the link between data and aesthetics. They generally make it possible to refine the graph by modifying, for example, color palettes or by creating color gradients, or even by managing the axes of the graph. The scales functions follow the following scheme:
+- they start with scale_;
+_ followed by the name of the aesthetics that you want to modify (color_, fill_, x _...);
+_ and end with the name of the scale: manual, identity ...
+
+```{r}
+ggplot(diamonds)+aes(x=carat,y=price,color=cut)+geom_point()+
+  scale_color_manual(values=c("Fair"="black","Good"="yellow",
+                              "Very Good"="blue","Premium"="red","Ideal"="green"))
+```
+Voici quelques exemples concrets d'utilisation de scales :
+
+************************************************************
+
+Here are some concrete examples of using scales:
+
+```{r}
+p1 <- ggplot(diamonds)+aes(x=cut)+geom_bar(aes(fill=cut))
+p1
+```
+
+On change la couleur des barres en utilisant la palette de couleurs prédéfinie reds.
+************************************************************
+
+We change the color of the bars using the predefined reds color palette.
+
+```{r}
+p1 + scale_fill_brewer(palette="Reds")
+```
+
+Dégradé de couleur pour un nuage de points : on représente le nuage de points carat x price avec une échelle de couleur définie par la variable continue depth :
+************************************************************
+
+Color gradient for a point cloud: we represent the carat x price point cloud with a color scale defined by the continuous variable depth:
+
+```{r}
+p2 <- ggplot(diamonds)+aes(x=carat,y=price)+
+geom_point(aes(color=depth))
+p2
+```
+On modifie le dégradé de couleurs proposé par défaut en définissant un nouveau dégradé allant du jaune au rouge à l'aide de scale_color_gradient.
+
+************************************************************
+
+We modify the color gradient proposed by default by defining a new gradient going from yellow to red using scale_color_gradient.
+
+```{r}
+p2 + scale_color_gradient(low="red",high="yellow")
+```
+
+La gestion des axes et de la légende: on peut modifier la graduation de l'axe des abscisses, le nom de l'axe des ordonnées et celui de la variable de la légende du graphe p2 avec : 
+ ************************************************************
+The management of the axes and the legend: you can modify the graduation of the x-axis, the name of the y-axis and that of the legend variable of the graph p2 with:
+ 
+```{r}
+p2+scale_x_continuous(breaks=seq(0.5,3,by=0.5))+
+  scale_y_continuous(name="prix")+
+  scale_color_gradient("Profondeur")
+```
+
+## 3.2.3 Group and facets
+Le package ggplot2 permet aussi de faire des représentations ppour des groupes d'individus caractérisés par une ou plusieurs variables. Il y a essentiellement deux manières d'agir : 
+- on souhaite représenter les sous-groupes d'individus sur un même graphe : on utilise l'argument group dans la fonction aes; 
+- on souhaite représenter les sous-groupes dans des graphes différents : on utilise mes fonctions facet_grid et facet_wrap.
+Considérons l'exemple d'un lissage du nuage de points carat x price avec la fonction geom_smooth : 
+
+************************************************************
+The ggplot2 package also makes it possible to make representations for groups of individuals characterized by one or more variables. There are basically two ways to act:
+- we want to represent the subgroups of individuals on the same graph: we use the group argument in the aes function;
+- we want to represent the subgroups in different graphs: we use my facet_grid and facet_wrap functions.
+Consider the example of a smoothing of the carat x price point cloud with the function geom_smooth:
+
+```{r}
+ggplot(diamonds)+aes(x=carat,y=price)+geom_smooth()
+```
+Pour obtenir un lissage pour chaque valeur de la variable cut (on regroupe les individus pour chaque modalité de cut et on fait un lissage par groupe d'individus), il suffit d'ajouter l'argume,nt group dans aes: 
+
+************************************************************
+
+To obtain a smoothing for each value of the variable cut (we group the individuals for each modality of cut and we do a smoothing by group of individuals), it suffices to add the argument, nt group in aes:
+
+```{r}
+ggplot(diamonds)+aes(x=carat,y=price,group=cut)+geom_smooth()
+```
+
+On visualisz bien les cinq lissages sur le graphe du milieu. Il sont cependant pas distingués et on ne sait pas à quelle valeur de cut chaque courbe correspond. Pour pallier ce problème, il suffit d'ajouter color = cut dans aes :
+
+************************************************************
+We can clearly see the five smoothings on the middle graph. However, they are not distinguished and we do not know which cut value each curve corresponds to. To overcome this problem, just add color = cut in aes:
+
+```{r}
+ggplot(diamonds)+aes(x=carat,y=price,group=cut,color=cut)+ 
+  geom_smooth()
+```
+Si l'on souhaite obtenir les lissages sur des graphes séparés, on utilise les fonction facet_grid ou facet_wrap. Ces fonctions admettent comme argument une formule de la forme var1~var2. Elles renvoient en sortie la représentation souhaitée calculée sur les individus appartenant à chaque croissement des modalités de var1 et var2. La principale différence entre ces deux fonctions se situe dans la disposition des graphiques facet_grid produit un tableau de graphe de dimension n1 x n2 où n1 et n2 représentent les nombres de modalités de var1 et var2. Chaque graphe correspond à représentation des individus possédant une modalité de var1 en ligne et une modalité var2 en colonne. Facet_wrap calcul tous les croissements et représente les graphes associés les uns à la suite des autres. On représente par exemple le nuage de points carats x price ainsi que la droite de régression associée pour chque croissement des variables color et cut grâce aux ligne de code :
+
+************************************************************
+
+If one wishes to obtain the smoothings on separate graphs, one uses the facet_grid or facet_wrap functions. These functions take as argument a formula of the form var1 ~ var2. They return as an output the desired representation calculated on the individuals belonging to each crossing of the modalities of var1 and var2. The main difference between these two functions is in the layout of the graphs facet_grid produces a graph array of dimension n1 x n2 where n1 and n2 represent the number of modalities of var1 and var2. Each graph corresponds to the representation of individuals having a modality of var1 in row and a modality of var2 in column. Facet_wrap calculates all the crosses and represents the associated graphs one after the other. For example, we represent the carat x price cloud of points as well as the associated regression line for each increase of the variables color and cut thanks to the lines of code:
+
+
+```{r}
+ggplot(diamonds)+aes(x=carat,y=price)+geom_point()+
+  geom_smooth(method="lm")+facet_grid(color~cut)
+```
+
+
+```{r}
+ggplot(diamonds)+aes(x=carat,y=price)+geom_point()+
+  geom_smooth(method="lm")+facet_wrap(color~cut)
+```
+
+facet_grid propose une présentation plus cohérente lorsqu'on est en présence de deux variables avec peu de modalité. Lorsqu'on est en présence d'une seule variable, ou lorsqu'une variable admet beaucoup de modalités, il est préférable d'utiliser facet_wrap. On peut par exemple obtenir les lissages du graphe de droite sur des figures séparées en utilisant : 
+
+************************************************************
+facet_grid offers a more coherent presentation when there are two variables with little modality. When there is only one variable, or when a variable admits many modalities, it is preferable to use facet_wrap. We can for example obtain the smoothings of the graph on the right on separate figures by using:
+
+```{r}
+ggplot(diamonds)+aes(x=carat,y=price,color=cut)+geom_smooth()+
+facet_wrap(~cut,nrow=2)
+```
+### Remark 
+Pour dessiner plusieurs graphiques de la même forme dans une même fenêtre, il est toujours préférable de créer une variable group ou bien d'utiliser les fonction facet_grid ou facet_wrap. Cependant il est aussi possible de faire figurer des graphiques différents dans une même fenêtre. Pour cela, on définit dans un premier temps les graphique puis on les organise avec la fonction grid.arrange du package gridExtra, par exemple : 
+
+************************************************************
+
+
+To draw several graphics of the same shape in the same window, it is always preferable to create a group variable or to use the facet_grid or facet_wrap functions. However, it is also possible to display different graphics in the same window. To do this, we first define the graphs and then we organize them with the grid.arrange function of the gridExtra package, for example:
+```{r,message=FALSE,warning=FALSE}
+gr1 <- ggplot(diamonds)+aes(x=cut)+geom_bar() # 1er graphe
+gr2 <- ggplot(diamonds)+aes(x=price)+geom_histogram() # 2e graphe
+library(gridExtra)
+grid.arrange(gr1, gr2, ncol=2, nrow=1) # organisation des graphes
+```
+
+## 3.2.4 Complements
+
+Nous avons présenté la structure ggplot2 selon : 
+ggplot(...)+aes(...)+geom_...(...)+...
+
+La syntaxe est en réalité plus flexible. On peut par exemple spécifier les aes dans ggplot ou dans les geom_.Les trois instructions produisent le même exemple : 
+
+************************************************************
+We have presented the ggplot2 structure according to:
+ggplot (...) + aes (...) + geom _... (...) + ...
+
+The syntax is actually more flexible. For example, you can specify aes in ggplot or in geom_. The three instructions produce the same example:
+
+```{r}
+ggplot(diamonds)+aes(x=carat,y=price)+geom_point()
+ggplot(diamonds,aes(x=carat,y=price))+geom_point()
+ggplot(diamonds)+geom_point(aes(x=carat,y=price))
+```
+
+Il existe bien entendu un grand nombre d'autres fonctions proposées par ggplot2. On pourra citer notamment ggtitle qui permet d'ajouter un titre au graphique. Par ailleurs, l'environnement par défaut du graphe est défini par la fonction theme_grey, mais il est facile de changer ce thème.
+
+************************************************************
+
+There are of course a large number of other functions offered by ggplot2. We can cite in particular ggtitle which allows you to add a title to the graph. In addition, the graph's default environment is defined by the theme_grey function, but it is easy to change this theme.
+
+```{r}
+p <- ggplot(diamonds)+aes(x=carat,y=price,color=cut)+geom_point()
+p + theme_bw()
+p + theme_classic()
+p + theme_grey()
+p + theme_minimal()
+```
+
+D'autres thèmes sont disponibles dans le package ggthemes.
+
+Enfin la fonction qplot est en quelques sorte l'analogue pour ggplot2 de la fonction plot pour les graphiques classiques. Elle est très simple à utiliser : on obtiendra par un exemple le même grapphique vu précédemment.
+
+************************************************************
+Other themes are available in the ggthemes package.
+
+Finally, the qplot function is in a way the analog for ggplot2 of the plot function for classic graphics. It is very simple to use: for an example, we will obtain the same cluster seen previously.
+
+
+```{r}
+qplot(data=diamonds,x=carat,y=price,geom=c("point","smooth"), facets=color~cut)
+```
+### Exportation 
+Pour exporter un graphique ggplot2, on peut utiliser la fonction ggsave :
+
+************************************************************
+
+To export a ggplot2 graph, we can use the ggsave function:
+
+```{r,eval=FALSE}
+monplot <- qplot(data=diamonds,x=carat,y=price,geom=c("point","smooth"), facets=color~cut)
+ggsave("mon_graphique.pdf", plot = monplot, width = 11, height = 8)
+```
+
